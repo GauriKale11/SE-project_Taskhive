@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import "../styles/add-task.css";
 
 const Task = () => {
   return (
@@ -10,9 +11,7 @@ const Task = () => {
                 <input type="text"/>
             </div>
 
-            <div className="add-form"><div>
-      <p>Task Page</p>
-    </div>
+            <div className="add-form">
                 <label>Description</label>
                 <input type="text"/>
             </div>
