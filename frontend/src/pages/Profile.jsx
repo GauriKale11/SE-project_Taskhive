@@ -1,43 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import profileImage from "../assets/react.svg";
 import { FaLinkedin } from "react-icons/fa6";
-import { FaXTwitter } from "react-icons/fa6";
 import { FaGithub } from "react-icons/fa6";
-import { FaYoutube } from "react-icons/fa6";
-import { FaInstagram } from "react-icons/fa6";
+import { FaGoogleDrive } from "react-icons/fa6";
+
 import "../styles/profile.css";
 
 
 const Profile = () => {
+  const [username,setusername] = useState("Noopur Karkare");
+  const [role,setrole] = useState("Student");
+  const [contact,setcontact] = useState("9763718189");
+  const [school,setschool] = useState("COEP technological University");
   return (
+    <section class="profile-card">
     <div className="personal">
       <img src={profileImage} alt="" />
-      <h1 className="name">Name of user</h1>
-      <p className="country">Serbia</p>
-      <p className="stack">Front-End Web Developer</p>
-      <div className="buttons">
-        <button className="primary">Message</button>
-        <button className="secondary">Following</button>
-      </div>
+      <h1 className="name"> NAME : {username}</h1>
+      <p className="role">ROLE: {role}</p>
+      <p className="number">Contact Number : {contact}</p>
+      <p className="institution">Institute : {school}</p>
       <div className="social">
       <FaLinkedin />
-      <FaXTwitter />
       <FaGithub />
-      <FaYoutube />
-      <FaInstagram />
+      <FaGoogleDrive/>
       </div>
       <div className='skills'>
-        <h2>Skills</h2>
+        <h2>Subjects:</h2>
         <ul>
-            <li>HTML</li>
-            <li>CSS</li>
-            <li>Javscript</li>
-            <li>React.js</li>
-            <li>Wordpress</li>
-            <li>SEO</li>
+            <li>OS</li>
+            <li>OOPD</li>
+            <li>PC</li>
+            <li>DSA</li>
+            <li>DBMS</li>
+            <li>SE</li>
         </ul>
     </div>
     </div>
+    </section>
   );
 };
 
