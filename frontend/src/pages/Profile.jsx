@@ -3,6 +3,7 @@ import profileImage from "../assets/react.svg";
 import { FaLinkedin } from "react-icons/fa6";
 import { FaGithub } from "react-icons/fa6";
 import { FaGoogleDrive } from "react-icons/fa6";
+import { FaPencil } from "react-icons/fa6";
 
 import "../styles/profile.css";
 
@@ -18,8 +19,11 @@ const Profile = () => {
     <section class="profile-card">
     <div className="personal">
       <img src={profileImage} alt="" />
-      <h1 className="name"> NAME : {username}</h1>
-      <p className="role">ROLE: {role}</p>
+      <div className="changeDetails">
+        <h1 className="name"> Name : {username}</h1>
+        <FaPencil/>
+      </div>
+      <p className="role">Role: {role}</p>
       <p className="number">Contact Number : {contact}</p>
       <p className="institution">Institute : {school}</p>
       <div className="social">

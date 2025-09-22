@@ -28,31 +28,40 @@
   align-items: flex-start;
 }
 
+
 .personal img {
   position: absolute;
-  top: -4rem;
+  top: -4.5rem;
   left: 50%;
   transform: translateX(-50%);
-  width: 8rem;
-  height: 8rem;
+  width: 9rem;
+  height: 9rem;
   border-radius: 50%;
   border: 3px solid #b0acac;
   background: #fff;
   padding: 0.5rem;
 }
 
-.personal .info {
-  margin-top: 1rem;
+.personal .changeDetails{
   display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  align-items: center;
+  flex-direction: row;
 }
 
+.personal svg{
+  font-size: 1.5rem;
+  color: #555;
+  transition: 0.2s;
+  cursor: pointer;
+  border:1px solid #434141 ;
+  border-radius: 0.5rem;
+  width:2.5rem;
+  margin-left: 13rem;
+}
 .personal .name {
   font-size: 1.2rem;
   font-weight: bold;
   color: #434141;
+  margin-top: 0.8rem;
 }
 
 .personal .number,.role,.institution {
@@ -61,7 +70,7 @@
 }
 
 .social {
-  margin-top: 1.5rem;
+  margin-top: 1.2rem;
   display: flex;
   justify-content: space-evenly;
   gap: 1rem;
@@ -72,6 +81,8 @@
   color: #555;
   transition: 0.2s;
   cursor: pointer;
+  border: none;
+  margin-left: 0;
 }
 
 .social svg:hover {
@@ -82,13 +93,14 @@
 .skills {
   padding: 1.6rem 1rem;
   border-top: 1px solid #eee;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
 }
 
 .skills h5 {
+  margin-top: -0.5rem;
   text-transform: uppercase;
   font-size: 1rem;
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.5rem;
   color: #444;
   letter-spacing: 1px;
 }
