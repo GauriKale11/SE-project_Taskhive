@@ -10,7 +10,7 @@ import "../styles/profile.css";
 
 const Profile = () => {
   const [username,setusername] = useState("Noopur Karkare");
-  const [role,setrole] = useState("Student");
+  const [gmail,setgmail] = useState("noopurkarkare@gmail.com");
   const [contact,setcontact] = useState("9763718189");
   const [school,setschool] = useState("COEP technological University");
   const [subjects,setSubjects] = useState(["OS","DBMS","SE","DSA","PC","OOPD","CO"]);
@@ -23,7 +23,7 @@ const Profile = () => {
         <h1 className="name"> Name : {username}</h1>
         <FaPencil/>
       </div>
-      <p className="role">Role: {role}</p>
+      <p className="role">Registered mail : {gmail}</p>
       <p className="number">Contact Number : {contact}</p>
       <p className="institution">Institute : {school}</p>
       <div className="social">
