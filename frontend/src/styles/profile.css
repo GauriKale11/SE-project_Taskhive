@@ -13,9 +13,9 @@
   position: relative;
   width: 90%;              
   max-width: 32rem;
-  background: #fff;
+  background: #040450;
   border-radius: 1.2rem;
-  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 6px 20px rgba(142, 131, 131, 0.15);
   text-align: center;
   overflow: visible;
   padding-top: 3rem;
@@ -40,6 +40,7 @@
   border: 3px solid #b0acac;
   background: #fff;
   padding: 0.5rem;
+   box-shadow: 0px 6px 20px rgba(228, 223, 223, 0.15);
 }
 
 .personal .changeDetails{
@@ -49,7 +50,7 @@
 
 .personal svg{
   font-size: 1.5rem;
-  color: #555;
+  color: #e9e2e2;
   transition: 0.2s;
   cursor: pointer;
   border:1px solid #434141 ;
@@ -61,13 +62,13 @@
 .personal .name {
   font-size: 1.2rem;
   font-weight: bold;
-  color: #434141;
+  color: #fef9f9;
   margin-top: 0.8rem;
 }
 
 .personal .number,.role,.institution {
   font-size: 1rem;
-  color: #777;
+  color: #e8e2e2;
 }
 
 .social {
@@ -79,7 +80,7 @@
 
 .social svg {
   font-size: 1.5rem;
-  color: #555;
+  color: #f2f0f0;
   transition: 0.2s;
   cursor: pointer;
   border: none;
@@ -88,7 +89,7 @@
 }
 
 .social svg:hover {
-  color: #000;
+  color: #2f4bd5;
   transform: scale(1.1);
 }
 
@@ -103,7 +104,7 @@
   text-transform: uppercase;
   font-size: 1rem;
   margin-bottom: 0.5rem;
-  color: #444;
+  color: #f8f1f1;
   letter-spacing: 1px;
 }
 
