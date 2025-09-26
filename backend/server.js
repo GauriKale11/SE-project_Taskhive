@@ -1,0 +1,14 @@
+const express = require('express')
+const app = express()
+const jwt = require('jsonwebtoken')
+
+app.listen(3000);
+
+app.use(express.json());
+
+//auth 
+app.post('/login',(req,res)=>{
+    const username = req.body.username
+    const user = {name:username}
+    jwt.sign(user,process.env.ACCESS_TOKEN_SECRET)
+});
