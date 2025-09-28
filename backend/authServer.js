@@ -15,6 +15,8 @@ app.post('/login',(req,res)=>{
 
     const accToken = generateAccessToken(user)
     const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET)
+
+    refreshTokens.push(refreshToken)
     res.json({accessToken:accToken, refreshToken: refreshToken})
 });
 
