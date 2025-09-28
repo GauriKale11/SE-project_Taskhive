@@ -1,0 +1,121 @@
+/* Outer container */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  padding: 1rem;
+
+  background-image: url('../assets/image.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
+}
+
+
+
+/* Card holding both panels */
+.login-card {
+  display: flex;
+  flex-wrap: wrap;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden; /* ensures panels join seamlessly */
+  max-width: 900px;
+  width: 100%;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Left panel (form) */
+.login-box {
+  flex: 1;
+  padding: 2.5rem;
+  background: #ffffff;
+}
+
+.login-box h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #333;
+  font-weight: bold;
+}
+
+.login-box p {
+  text-align: center;
+  font-size: 0.95rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.login-box p a {
+  color: #330066;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.login-box p a:hover {
+  text-decoration: underline;
+}
+
+/* Inputs & buttons */
+.login-box label {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.login-box span {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.login-box input {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.login-box input:focus {
+  outline: none;
+  border-color: #030742;
+  box-shadow: 0 0 0 3px rgba(3, 7, 66, 0.15);
+}
+
+.login-box button {
+  width: 100%;
+  background-color: #030742;
+  color: #fff;
+  border: none;
+  padding: 0.8rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.25s ease, transform 0.1s ease;
+}
+.login-box button:hover {
+  background-color: #050b5b;
+  transform: translateY(-1px);
+}
+
+/* Right panel (logo fills everything) */
+.login-logo {
+  flex: 1;
+  padding: 0; /* remove the gap */
+  background-color: #f5f9ff; /* optional */
+}
+
+.login-logo img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover; /* fill area without distortion */
+}
+
