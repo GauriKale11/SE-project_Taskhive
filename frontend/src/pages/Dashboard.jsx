@@ -220,13 +220,14 @@ const Dashboard = () => {
                   </svg>
                 </div>
               </button>
+
               <div className="inline-flex items-center rounded-md border border-input bg-transparent p-1 w-full sm:w-[240px]">
                 <div
                   className="relative flex-grow"
                   data-state="closed"
                   style={{flex: '1 1 0%'}}
                 >
-                  <button className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rounded-md px-3 relative h-8 w-full overflow-hidden transition-colors hover:bg-secondary/50 hover:text-secondary-foreground cursor-pointer">
+                  <button className="cal-menu-icons">
                     <div className="flex items-center justify-center space-x-1 w-full">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -255,7 +256,7 @@ const Dashboard = () => {
                   data-state="closed"
                   style={{flex: '1 1 0%'}}
                 >
-                  <button className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rounded-md px-3 relative h-8 w-full overflow-hidden transition-colors hover:bg-secondary/50 hover:text-secondary-foreground cursor-pointer">
+                  <button className="cal-menu-icons">
                     <div className="flex items-center justify-center space-x-1 w-full">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -273,6 +274,7 @@ const Dashboard = () => {
                         <path d="M12 3v18"></path>
                       </svg>
                     </div>
+                    
                   </button>
                 </div>
                 <div
@@ -314,7 +316,7 @@ const Dashboard = () => {
                   data-state="closed"
                   style={{flex: '1 1 0%'}}
                 >
-                  <button className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 rounded-md px-3 relative h-8 w-full overflow-hidden transition-colors hover:bg-secondary/50 hover:text-secondary-foreground cursor-pointer">
+                  <button className="cal-menu-icons">
                     <div className="flex items-center justify-center space-x-1 w-full">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -458,7 +460,7 @@ const Dashboard = () => {
                         <div className="flex-grow overflow-hidden">
                           <div style={{opacity: 1, transform: 'none'}}>
                             <div
-                              className="bg-blue-200 dark:bg-blue-800 text-blue-800 dark:text-blue-200 p-1 text-[8px] h-10 sm:text-xs rounded mb-1 cursor-pointer transition-colors duration-200 hover:bg-opacity-40 dark:hover:bg-opacity-40"
+                              className="bg-blue-200 dark:bg-blue-800 text-blue-800 dark:text-blue-200 p-1 "
                               type="button"
                               aria-haspopup="dialog"
                               aria-expanded="false"
@@ -483,7 +485,7 @@ const Dashboard = () => {
                           data-state="closed"
                           style={{opacity: 1, transform: 'none'}}
                         >
-                          <button className="inline-flex items-center justify-center whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent rounded-md w-full gap-1 text-[8px] sm:text-xs text-muted-foreground hover:text-foreground mt-auto sm:mt-1 truncate px-0.5 sm:px-2 h-5 sm:h-8">
+                          <button className="task-extra-info">
                             <span>+2</span>
                             <span className="hidden sm:inline"> more</span>
                           </button>
@@ -555,7 +557,7 @@ const Dashboard = () => {
                         <div className="flex-grow overflow-hidden">
                           <div style={{opacity: 1, transform: 'none'}}>
                             <div
-                              className="bg-red-200 dark:bg-red-800 text-red-800 dark:text-red-200 p-1 text-[8px] h-10 sm:text-xs rounded mb-1 cursor-pointer transition-colors duration-200 hover:bg-opacity-40 dark:hover:bg-opacity-40"
+                              className="bg-red-200 dark:bg-red-800 text-red-800 dark:text-red-200 p-1 "
                               type="button"
                               aria-haspopup="dialog"
                               aria-expanded="false"
@@ -609,7 +611,7 @@ const Dashboard = () => {
                         <div className="flex-grow overflow-hidden">
                           <div style={{opacity: 1, transform: 'none' }}>
                             <div
-                              className="task-name"
+                              className="bg-green-200 dark:bg-green-800 text-green-800 dark:text-green-200 p-1 "
                               type="button"
                               aria-haspopup="dialog"
                               aria-expanded="false"
@@ -633,7 +635,7 @@ const Dashboard = () => {
                           data-state="closed"
                           style={{opacity: 1, transform: 'none'}}
                         >
-                          <button className="inline-flex items-center justify-center whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent rounded-md w-full gap-1 text-[8px] sm:text-xs text-muted-foreground hover:text-foreground mt-auto sm:mt-1 truncate px-0.5 sm:px-2 h-5 sm:h-8">
+                          <button className="task-extra-info">
                             <span>+1</span>
                             <span className="hidden sm:inline"> more</span>
                           </button>
@@ -646,7 +648,7 @@ const Dashboard = () => {
                         <div className="flex-grow overflow-hidden">
                           <div style={{opacity: 1, transform: 'none'}}>
                             <div
-                              className="bg-purple-200 dark:bg-purple-800 text-purple-800 dark:text-purple-200 p-1 text-[8px] h-10 sm:text-xs rounded mb-1 cursor-pointer transition-colors duration-200 hover:bg-opacity-40 dark:hover:bg-opacity-40"
+                              className="bg-purple-200 dark:bg-purple-800 text-purple-800 dark:text-purple-200 p-1 "
                               type="button"
                               aria-haspopup="dialog"
                               aria-expanded="false"
@@ -670,7 +672,7 @@ const Dashboard = () => {
                           data-state="closed"
                           style={{opacity: 1, transform: 'none'}}
                         >
-                          <button className="inline-flex items-center justify-center whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent rounded-md w-full gap-1 text-[8px] sm:text-xs text-muted-foreground hover:text-foreground mt-auto sm:mt-1 truncate px-0.5 sm:px-2 h-5 sm:h-8">
+                          <button className="task-extra-info">
                             <span>+2</span>
                             <span className="hidden sm:inline"> more</span>
                           </button>
@@ -702,7 +704,7 @@ const Dashboard = () => {
                         <div className="flex-grow overflow-hidden">
                           <div style={{opacity: 1, transform: 'none'}}>
                             <div
-                              className="bg-purple-200 dark:bg-purple-800 text-purple-800 dark:text-purple-200 p-1 text-[8px] h-10 sm:text-xs rounded mb-1 cursor-pointer transition-colors duration-200 hover:bg-opacity-40 dark:hover:bg-opacity-40"
+                              className="bg-purple-200 dark:bg-purple-800 text-purple-800 dark:text-purple-200 p-1 "
                               type="button"
                               aria-haspopup="dialog"
                               aria-expanded="false"
@@ -775,7 +777,7 @@ const Dashboard = () => {
                         <div className="flex-grow overflow-hidden">
                           <div style={{opacity: 1, transform: 'none'}}>
                             <div
-                              className="bg-yellow-200 dark:bg-yellow-800 text-yellow-800 dark:text-yellow-200 p-1 text-[8px] h-10 sm:text-xs rounded mb-1 cursor-pointer transition-colors duration-200 hover:bg-opacity-40 dark:hover:bg-opacity-40"
+                              className="bg-yellow-200 dark:bg-yellow-800 text-yellow-800 dark:text-yellow-200 p-1 "
                               type="button"
                               aria-haspopup="dialog"
                               aria-expanded="false"
@@ -799,7 +801,7 @@ const Dashboard = () => {
                           data-state="closed"
                           style={{opacity: 1, transform: 'none'}}
                         >
-                          <button className="inline-flex items-center justify-center whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent rounded-md w-full gap-1 text-[8px] sm:text-xs text-muted-foreground hover:text-foreground mt-auto sm:mt-1 truncate px-0.5 sm:px-2 h-5 sm:h-8">
+                          <button className="task-extra-info">
                             <span>+1</span>
                             <span className="hidden sm:inline"> more</span>
                           </button>
@@ -831,7 +833,7 @@ const Dashboard = () => {
                         <div className="flex-grow overflow-hidden">
                           <div style={{opacity: 1, transform: 'none'}}>
                             <div
-                              className="bg-blue-200 dark:bg-blue-800 text-blue-800 dark:text-blue-200 p-1 text-[8px] h-10 sm:text-xs rounded mb-1 cursor-pointer transition-colors duration-200 hover:bg-opacity-40 dark:hover:bg-opacity-40"
+                              className="bg-blue-200 dark:bg-blue-800 text-blue-800 dark:text-blue-200 p-1 "
                               type="button"
                               aria-haspopup="dialog"
                               aria-expanded="false"
@@ -886,7 +888,7 @@ const Dashboard = () => {
                         <div className="flex-grow overflow-hidden">
                           <div style={{opacity: 1, transform: 'none'}}>
                             <div
-                              className="bg-green-200 dark:bg-green-800 text-green-800 dark:text-green-200 p-1 text-[8px] h-10 sm:text-xs rounded mb-1 cursor-pointer transition-colors duration-200 hover:bg-opacity-40 dark:hover:bg-opacity-40"
+                              className="bg-green-200 dark:bg-green-800 text-green-800 dark:text-green-200 p-1 "
                               type="button"
                               aria-haspopup="dialog"
                               aria-expanded="false"
@@ -910,7 +912,7 @@ const Dashboard = () => {
                           data-state="closed"
                           style={{opacity: 1, transform: 'none'}}
                         >
-                          <button className="inline-flex items-center justify-center whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent rounded-md w-full gap-1 text-[8px] sm:text-xs text-muted-foreground hover:text-foreground mt-auto sm:mt-1 truncate px-0.5 sm:px-2 h-5 sm:h-8">
+                          <button className="task-extra-info">
                             <span>+5</span>
                             <span className="hidden sm:inline"> more</span>
                           </button>
@@ -923,7 +925,7 @@ const Dashboard = () => {
                         <div className="flex-grow overflow-hidden">
                           <div style={{opacity: 1, transform: 'none'}}>
                             <div
-                              className="bg-purple-200 dark:bg-purple-800 text-purple-800 dark:text-purple-200 p-1 text-[8px] h-10 sm:text-xs rounded mb-1 cursor-pointer transition-colors duration-200 hover:bg-opacity-40 dark:hover:bg-opacity-40"
+                              className="bg-purple-200 dark:bg-purple-800 text-purple-800 dark:text-purple-200 p-1 "
                               type="button"
                               aria-haspopup="dialog"
                               aria-expanded="false"
@@ -947,7 +949,7 @@ const Dashboard = () => {
                           data-state="closed"
                           style={{opacity: 1, transform: 'none'}}
                         >
-                          <button className="inline-flex items-center justify-center whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent rounded-md w-full gap-1 text-[8px] sm:text-xs text-muted-foreground hover:text-foreground mt-auto sm:mt-1 truncate px-0.5 sm:px-2 h-5 sm:h-8">
+                          <button className="task-extra-info">
                             <span>+3</span>
                             <span className="hidden sm:inline"> more</span>
                           </button>
@@ -979,7 +981,7 @@ const Dashboard = () => {
                         <div className="flex-grow overflow-hidden">
                           <div style={{opacity: 1, transform: 'none'}}>
                             <div
-                              className="bg-red-200 dark:bg-red-800 text-red-800 dark:text-red-200 p-1 text-[8px] h-10 sm:text-xs rounded mb-1 cursor-pointer transition-colors duration-200 hover:bg-opacity-40 dark:hover:bg-opacity-40"
+                              className="bg-red-200 dark:bg-red-800 text-red-800 dark:text-red-200 p-1 "
                               type="button"
                               aria-haspopup="dialog"
                               aria-expanded="false"
@@ -1003,7 +1005,7 @@ const Dashboard = () => {
                           data-state="closed"
                           style={{opacity: 1, transform: 'none'}}
                         >
-                          <button className="inline-flex items-center justify-center whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent rounded-md w-full gap-1 text-[8px] sm:text-xs text-muted-foreground hover:text-foreground mt-auto sm:mt-1 truncate px-0.5 sm:px-2 h-5 sm:h-8">
+                          <button className="task-extra-info">
                             <span>+1</span>
                             <span className="hidden sm:inline"> more</span>
                           </button>
@@ -1035,7 +1037,7 @@ const Dashboard = () => {
                         <div className="flex-grow overflow-hidden">
                           <div style={{opacity: 1, transform: 'none'}}>
                             <div
-                              className="bg-green-200 dark:bg-green-800 text-green-800 dark:text-green-200 p-1 text-[8px] h-10 sm:text-xs rounded mb-1 cursor-pointer transition-colors duration-200 hover:bg-opacity-40 dark:hover:bg-opacity-40"
+                              className="bg-green-200 dark:bg-green-800 text-green-800 dark:text-green-200 p-1 "
                               type="button"
                               aria-haspopup="dialog"
                               aria-expanded="false"
@@ -1059,7 +1061,7 @@ const Dashboard = () => {
                           data-state="closed"
                           style={{opacity: 1, transform: 'none'}}
                         >
-                          <button className="inline-flex items-center justify-center whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent rounded-md w-full gap-1 text-[8px] sm:text-xs text-muted-foreground hover:text-foreground mt-auto sm:mt-1 truncate px-0.5 sm:px-2 h-5 sm:h-8">
+                          <button className="task-extra-info">
                             <span>+2</span>
                             <span className="hidden sm:inline"> more</span>
                           </button>
@@ -1072,7 +1074,7 @@ const Dashboard = () => {
                         <div className="flex-grow overflow-hidden">
                           <div style={{opacity: 1, transform: 'none'}}>
                             <div
-                              className="bg-purple-200 dark:bg-purple-800 text-purple-800 dark:text-purple-200 p-1 text-[8px] h-10 sm:text-xs rounded mb-1 cursor-pointer transition-colors duration-200 hover:bg-opacity-40 dark:hover:bg-opacity-40"
+                              className="bg-purple-200 dark:bg-purple-800 text-purple-800 dark:text-purple-200 p-1 "
                               type="button"
                               aria-haspopup="dialog"
                               aria-expanded="false"
@@ -1126,7 +1128,7 @@ const Dashboard = () => {
                         <div className="flex-grow overflow-hidden">
                           <div style={{opacity: 1, transform: 'none'}}>
                             <div
-                              className="bg-yellow-200 dark:bg-yellow-800 text-yellow-800 dark:text-yellow-200 p-1 text-[8px] h-10 sm:text-xs rounded mb-1 cursor-pointer transition-colors duration-200 hover:bg-opacity-40 dark:hover:bg-opacity-40 border-l-4 border-l-black/70 dark:border-l-white/50"
+                              className="bg-yellow-200 dark:bg-yellow-800 text-yellow-800 dark:text-yellow-200 p-1  border-l-4 border-l-black/70 dark:border-l-white/50"
                               type="button"
                               aria-haspopup="dialog"
                               aria-expanded="false"
@@ -1163,7 +1165,7 @@ const Dashboard = () => {
                         <div className="flex-grow overflow-hidden">
                           <div style={{opacity: 1, transform: 'none'}}>
                             <div
-                              className="bg-yellow-200 dark:bg-yellow-800 text-yellow-800 dark:text-yellow-200 p-1 text-[8px] h-10 sm:text-xs rounded mb-1 cursor-pointer transition-colors duration-200 hover:bg-opacity-40 dark:hover:bg-opacity-40 border-x-0"
+                              className="bg-yellow-200 dark:bg-yellow-800 text-yellow-800 dark:text-yellow-200 p-1  border-x-0"
                               type="button"
                               aria-haspopup="dialog"
                               aria-expanded="false"
@@ -1189,7 +1191,7 @@ const Dashboard = () => {
                           data-state="closed"
                           style={{opacity: 1, transform: 'none'}}
                         >
-                          <button className="inline-flex items-center justify-center whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent rounded-md w-full gap-1 text-[8px] sm:text-xs text-muted-foreground hover:text-foreground mt-auto sm:mt-1 truncate px-0.5 sm:px-2 h-5 sm:h-8">
+                          <button className="task-extra-info">
                             <span>+6</span>
                             <span className="hidden sm:inline"> more</span>
                           </button>
@@ -1202,7 +1204,7 @@ const Dashboard = () => {
                         <div className="flex-grow overflow-hidden">
                           <div style={{opacity: 1, transform: 'none'}}>
                             <div
-                              className="bg-yellow-200 dark:bg-yellow-800 text-yellow-800 dark:text-yellow-200 p-1 text-[8px] h-10 sm:text-xs rounded mb-1 cursor-pointer transition-colors duration-200 hover:bg-opacity-40 dark:hover:bg-opacity-40 border-x-0"
+                              className="bg-yellow-200 dark:bg-yellow-800 text-yellow-800 dark:text-yellow-200 p-1  border-x-0"
                               type="button"
                               aria-haspopup="dialog"
                               aria-expanded="false"
@@ -1228,7 +1230,7 @@ const Dashboard = () => {
                           data-state="closed"
                           style={{opacity: 1, transform: 'none'}}
                         >
-                          <button className="inline-flex items-center justify-center whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent rounded-md w-full gap-1 text-[8px] sm:text-xs text-muted-foreground hover:text-foreground mt-auto sm:mt-1 truncate px-0.5 sm:px-2 h-5 sm:h-8">
+                          <button className="task-extra-info">
                             <span>+1</span>
                             <span className="hidden sm:inline"> more</span>
                           </button>
@@ -1241,7 +1243,7 @@ const Dashboard = () => {
                         <div className="flex-grow overflow-hidden">
                           <div style={{opacity: 1, transform: 'none'}}>
                             <div
-                              className="bg-yellow-200 dark:bg-yellow-800 text-yellow-800 dark:text-yellow-200 p-1 text-[8px] h-10 sm:text-xs rounded mb-1 cursor-pointer transition-colors duration-200 hover:bg-opacity-40 dark:hover:bg-opacity-40 border-x-0"
+                              className="bg-yellow-200 dark:bg-yellow-800 text-yellow-800 dark:text-yellow-200 p-1  border-x-0"
                               type="button"
                               aria-haspopup="dialog"
                               aria-expanded="false"
@@ -1267,7 +1269,7 @@ const Dashboard = () => {
                           data-state="closed"
                           style={{opacity: 1, transform: 'none'}}
                         >
-                          <button className="inline-flex items-center justify-center whitespace-nowrap font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent rounded-md w-full gap-1 text-[8px] sm:text-xs text-muted-foreground hover:text-foreground mt-auto sm:mt-1 truncate px-0.5 sm:px-2 h-5 sm:h-8">
+                          <button className="task-extra-info">
                             <span>+1</span>
                             <span className="hidden sm:inline"> more</span>
                           </button>
