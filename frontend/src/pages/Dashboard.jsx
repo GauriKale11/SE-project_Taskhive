@@ -3,12 +3,12 @@ import "../styles/dashboard.css";
 // import Calender from "../components/Calender";
 import Calender_copy from "../components/Calender_copy";
 
-const Dashboard = () => {
+const Dashboard = ({ tasks }) => {
   return (
     <div>
       <p>Dashboard page</p>
       {/* <Calender /> */}
-      <Calender_copy />
+      <Calender_copy tasks={tasks} />
     </div>
   );
 };

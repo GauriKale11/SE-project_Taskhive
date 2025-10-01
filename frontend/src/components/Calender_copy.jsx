@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import "../styles/calender_copy.css"; 
-import { Link } from "react-router-dom";  
+import "../styles/calender_copy.css";
+import { Link } from "react-router-dom";
 
-const Calender_copy = () => {
-    const [currentMonth, setCurrentMonth] = useState(new Date());
+const Calender_copy = ({ tasks }) => {
+  const [currentMonth, setCurrentMonth] = useState(new Date());
   const [events, setEvents] = useState([
     { date: new Date(2025, 9, 3), title: "Meeting A", time: "10:00 - 11:30" },
     { date: new Date(2025, 9, 3), title: "Review Call", time: "2:00 - 3:00" },
@@ -27,10 +27,16 @@ const Calender_copy = () => {
     days.push({ date: new Date(year, month, d) });
   }
 
-  const addEvent = (day) => {
-    const newEvent = { date: day, title: "New Event", time: "4:00 - 5:00" };
-    setEvents((prev) => [...prev, newEvent]);
-  };
+  if (tasks.length === 0) {
+    console.log("No task");
+  } else {
+    console.log(tasks);
+  }
+
+  //   const addEvent = (day) => {
+  //     const newEvent = { date: day, title: "New Event", time: "4:00 - 5:00" };
+  //     setEvents((prev) => [...prev, newEvent]);
+  //   };
 
   const isSameDay = (d1, d2) =>
     d1 &&
@@ -40,8 +46,18 @@ const Calender_copy = () => {
     d1.getFullYear() === d2.getFullYear();
 
   const monthNames = [
-    "January","February","March","April","May","June",
-    "July","August","September","October","November","December"
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ];
   const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -61,7 +77,9 @@ const Calender_copy = () => {
 
       <div className="calendar-weekdays">
         {weekDays.map((d) => (
-          <div key={d} className="calendar-weekday">{d}</div>
+          <div key={d} className="calendar-weekday">
+            {d}
+          </div>
         ))}
       </div>
 
@@ -86,13 +104,14 @@ const Calender_copy = () => {
                   </button>
                 )}
               </div>
-              {d.date && (
+
+              {/* {d.date && (
                 <Link to='/task'>
                     <button className="add-event">
                     + Add
                     </button>
                 </Link>
-              )}
+              )} */}
             </div>
           );
         })}
