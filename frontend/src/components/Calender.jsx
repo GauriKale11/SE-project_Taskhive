@@ -1,9 +1,10 @@
-import React from 'react'
+import React from 'react';
+import '../styles/calender.css';
 
 const Calender = () => {
   return (
-    <div className="p-6 pt-0">
-        <div>
+    <div className="p-4 pt-0 cal-container">
+        <div className='cal-box'>
           <div className="flex flex-col sm:flex-row justify-between items-center mb-4 space-y-4 sm:space-y-0">
             <div className="flex items-center space-x-1 sm:space-x-2">
               <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-8 w-8 sm:h-10 sm:w-10">
@@ -408,6 +409,7 @@ const Calender = () => {
                       <div className="text-center font-medium text-xs sm:text-sm">
                         Sun
                       </div>
+                      
                       <div className="p-1 sm:p-2 h-[80px] sm:h-[130px] border rounded relative group flex flex-col">
                         <div className="font-semibold mb-1 w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center text-xs sm:text-sm">
                           1
@@ -449,6 +451,7 @@ const Calender = () => {
                           </button>
                         </div>
                       </div>
+
                       <div className="p-1 sm:p-2 h-[80px] sm:h-[130px] border rounded relative group flex flex-col">
                         <div className="font-semibold mb-1 w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center text-xs sm:text-sm">
                           3
@@ -487,6 +490,7 @@ const Calender = () => {
                           </button>
                         </div>
                       </div>
+
                       <div className="p-1 sm:p-2 h-[80px] sm:h-[130px] border rounded relative group flex flex-col">
                         <div className="font-semibold mb-1 w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center text-xs sm:text-sm">
                           4
