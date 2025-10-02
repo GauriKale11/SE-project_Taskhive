@@ -5,7 +5,7 @@ import logo from "../assets/logo.jpg";
 const Task = ({ onSubmit }) => {
 
     const [ taskData, SetTaskData ] = useState({
-        title: "", description: "", start_date: "", due_date: "",  default_time:"", notify:false,
+        title: "", description: "", start_date: "", due_date: "",  default_time:"", notify:false, color: ""
     });
 
     const handleChange = (e) => {
@@ -31,6 +31,7 @@ const Task = ({ onSubmit }) => {
           due_date: "",
           default_time: "",
           notify: false,
+          color: ""
         }); 
       };
 
@@ -63,12 +64,17 @@ const Task = ({ onSubmit }) => {
 
         <div className="add-form">
           <label>Default time of day</label>
-          <input type="number" name="default_time" value={taskData.default_time} onChange={handleChange} />
+          <input type="number" min={0} name="default_time" value={taskData.default_time} onChange={handleChange} />min
         </div>
 
         <div className="add-form">
           <label>Do you want to get notifications?</label>
           <input type="checkbox" name="notify" checked={taskData.notify} onChange={handleChange} />
+        </div>
+
+        <div className="add-form">
+          <label>Event Color</label>
+          <input type="color" name="color" value={taskData.color} onChange={handleChange} />
         </div>
 
         <div className="add-btn-div">

@@ -46,7 +46,6 @@ const Calender_copy = ({ tasks }) => {
 
   return (
     <div className="calendar-container">
-      {/* Header */}
       <div className="calendar-header">
         <button onClick={() => setCurrentMonth(new Date(year, month - 1, 1))}>
           Prev
@@ -83,7 +82,6 @@ const Calender_copy = ({ tasks }) => {
                 {dayEvents.slice(0, 1).map((ev, i) => (
                   <div key={i} className="event">
                     <div className="event-title">{ev.title}</div>
-                    {/* Display due_date nicely */}
                     <div className="event-time">
                       {new Date(ev.due_date).toDateString()}
                     </div>
