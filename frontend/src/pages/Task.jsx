@@ -10,7 +10,8 @@ const Task = ({ onSubmit }) => {
     due_date: "",
     default_time: "",
     notify: false,
-    priority: "Medium", // added priority
+    priority: "Medium",
+    subject_id: "",
   });
 
   const handleChange = (e) => {
@@ -24,13 +25,16 @@ const Task = ({ onSubmit }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Prepare object for backend
     const newTask = {
       title: taskData.title,
       description: taskData.description,
-      deadline: taskData.due_date, // map frontend due_date to backend deadline
+      deadline: taskData.due_date,
+      created_on: taskData.start_date,
+      daily_time: taskData.default_time,
+      notify: taskData.notify,
       priority: taskData.priority,
-      user_id: 1, // later replace with logged in user
+      subject_id: taskData.subject_id,
+      user_id: 1,
     };
 
     try {
@@ -42,18 +46,14 @@ const Task = ({ onSubmit }) => {
 
       const data = await res.json();
       console.log("Task added:", data);
-      alert("Task added successfully!");
     } catch (err) {
       console.error(err);
-      alert("Failed to add task");
     }
 
-    // Call old onSubmit prop if passed (kept old functionality)
     if (typeof onSubmit === "function") {
       onSubmit(taskData);
     }
 
-    // Reset form
     setTaskData({
       title: "",
       description: "",
@@ -62,6 +62,7 @@ const Task = ({ onSubmit }) => {
       default_time: "",
       notify: false,
       priority: "Medium",
+      subject_id: "",
     });
   };
 
@@ -121,7 +122,9 @@ const Task = ({ onSubmit }) => {
             name="default_time"
             value={taskData.default_time}
             onChange={handleChange}
+            min={0}
           />
+          min
         </div>
 
         <div className="add-form">
@@ -144,6 +147,24 @@ const Task = ({ onSubmit }) => {
             <option>Low</option>
             <option>Medium</option>
             <option>High</option>
+          </select>
+        </div>
+
+        <div className="add-form">
+          <label>Subject</label>
+          <select
+            name="subject_id"
+            value={taskData.subject_id}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select Subject</option>
+            <option value="1">Operating System</option>
+            <option value="2">Software Engineering</option>
+            <option value="3">Database Management System</option>
+            <option value="4">Environmental Studies</option>
+            <option value="5">Department Electives</option>
+            <option value="6">Internship</option>
           </select>
         </div>
 
