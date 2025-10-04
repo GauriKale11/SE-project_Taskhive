@@ -10,6 +10,24 @@ const Calender_copy = ({ tasks }) => {
     setEvents(tasks || []);
   }, [tasks]);
 
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/tasks", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        });
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+        const data = await res.json();
+        setEvents(data);
+      } catch (err) {
+        console.error("Error fetching tasks:", err);
+      }
+    };
+
+    fetchTasks();
+  }, []); 
+
   const year = currentMonth.getFullYear();
   const month = currentMonth.getMonth();
 
@@ -71,7 +89,7 @@ const Calender_copy = ({ tasks }) => {
       <div className="calendar-grid">
         {days.map((d, idx) => {
           const dayEvents = d.date
-            ? events.filter((ev) => isSameDay(ev.due_date, d.date))
+            ? events.filter((ev) => isSameDay(ev.deadline, d.date))
             : [];
 
           return (
