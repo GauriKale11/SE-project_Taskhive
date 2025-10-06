@@ -8,14 +8,19 @@ import Profile from './pages/Profile'
 import Navbar from './components/Navbar'
 import Signup from './pages/Signup'
 
-
 function App() {
+
+  const [tasks, SetTasks] = useState([]);
+
+  const handleAddTask = (newTask) => {
+    SetTasks((prev) => [...prev, newTask]);
+};
   
   const router = createBrowserRouter([
-    {path: "/", element : <div><Navbar/><Dashboard/></div>},
+    {path: "/", element : <div><Navbar/><Dashboard tasks={tasks} /></div>},
     {path: "/login", element : <div><Login/></div>},
     {path: "/signup", element: <Signup/>},
-    {path: "/task", element : <div><Navbar/><Task/></div>},
+    {path: "/task", element : <div><Navbar/><Task onSubmit={handleAddTask} /></div>},
     {path: "/profile", element : <div><Navbar/><Profile/></div>},
   ]);
 
@@ -26,4 +31,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
