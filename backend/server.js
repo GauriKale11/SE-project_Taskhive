@@ -18,13 +18,13 @@ app.get("/posts", authenticateToken, (req, res) => {
   res.json(posts.filter((post) => post.username === req.user.name));
 });
 
-app.get('/api/tasks', async (req, res) => {
+app.get("/api/tasks", async (req, res) => {
   try {
-    const result = await pool.query('SELECT * FROM tasks ORDER BY created_at DESC');
+    const result = await pool.query("SELECT * FROM tasks ORDER BY deadline ASC");
     res.json(result.rows);
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Failed to fetch tasks' });
+    console.error("Error fetching tasks:", err);
+    res.status(500).json({ error: "Database fetch failed" });
   }
 });
 

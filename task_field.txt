@@ -1,0 +1,19 @@
+created_at: "2025-10-07T18:30:00.000Z"
+​​
+deadline: "2025-10-09T18:30:00.000Z"
+​​
+description: "NA"
+​​
+is_completed: false
+​​
+priority: "Medium"
+​​
+subject_id: "2"
+​​
+task_id: "10"
+​​
+title: "OS Assignment 9"
+​​
+updated_at: "2025-10-08T03:19:58.115Z"
+​​
+user_id: "1"
