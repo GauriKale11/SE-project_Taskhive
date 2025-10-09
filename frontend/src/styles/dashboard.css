@@ -29,13 +29,16 @@
   .chart-placeholder {
     height: 400px;
     display: flex;
+    flex-wrap: nowrap;
     align-items: center;
-    justify-content: center;
+    justify-content:space-between;
     background: #eef2ff;
     border: 2px dashed #c7d2fe;
     border-radius: 12px;
     color: #475569;
     font-size: 1rem;
+    overflow-x: auto;
+    padding: 1rem 0;
   }
   
   /* Right-side calendar */

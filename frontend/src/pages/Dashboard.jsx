@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "../styles/dashboard.css";
 import Calender_copy from "../components/Calender_copy";
 
+import Charts from "../components/PieChart";
+
 const Dashboard = ({ tasks }) => {
   const [showCalender, SetShowCalender] = useState(false);
 
@@ -18,7 +20,7 @@ const Dashboard = ({ tasks }) => {
       <div className="dashboard-main">
         <h2 className="section-title">Analytics Overview</h2>
         <div className="chart-placeholder">
-          <p>Pie Chart Analysis </p>
+          <Charts/>
         </div>
       </div>
 
