@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../styles/calender_copy.css";
 import { Link } from "react-router-dom";
 
-const Calender_copy = ({ tasks }) => {
+const Calender_copy = ({ tasks, onMonthClick }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [events, setEvents] = useState([]);
   const [selectedEvents, setSelectedEvents] = useState([]);
@@ -106,7 +106,7 @@ const Calender_copy = ({ tasks }) => {
 
   return (
     <div className="calendar-container">
-      <div className="calendar-header">
+      <div className="calendar-header" onClick={onMonthClick}>
         <button onClick={() => setCurrentMonth(new Date(year, month - 1, 1))}>
           Prev
         </button>
