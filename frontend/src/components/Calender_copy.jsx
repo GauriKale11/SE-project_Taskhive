@@ -142,11 +142,14 @@ const Calender_copy = ({ tasks }) => {
               <div className="day-number">{d.date ? d.date.getDate() : ""}</div>
               <div className="events">
                 {dayEvents.slice(0, 1).map((ev, i) => (
-                  <div key={i} className="event">
+                  <div
+                    key={i}
+                    className="event"
+                    onClick={() => handleShowMore(dayEvents)}
+                  >
                     <div className="event-title">{ev.title}</div>
                     <div className="event-time">
-                      {new Date(ev.deadline).toDateString()}{" "}
-                      {/* {new Date(ev.due_date).toDateString()} */}
+                      {/* {new Date(ev.deadline).toDateString()}{" "} */}
                     </div>
                   </div>
                 ))}

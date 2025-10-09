@@ -72,6 +72,7 @@
   border-radius: 4px;
   margin-bottom: 2px;
   font-size: 13px;
+  cursor: pointer;
 }
 
 .event-title {
@@ -224,4 +225,25 @@
 
 .close-btn:hover {
   background: #1e40af;
+}
+
+/* Make calendar adapt well when inside smaller containers */
+.calendar-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.calendar-grid {
+  grid-template-columns: repeat(7, minmax(40px, 1fr));
+}
+
+@media (max-width: 768px) {
+  .calendar-cell {
+    min-height: 70px;
+    font-size: 10px;
+  }
+
+  .day-number {
+    font-size: 11px;
+  }
 }

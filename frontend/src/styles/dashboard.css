@@ -1,0 +1,78 @@
+.dashboard-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    padding: 20px;
+    min-height: 100vh;
+    background: #f8fafc;
+    box-sizing: border-box;
+  }
+  
+  /* Main analytics section */
+  .dashboard-main {
+    flex: 1;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    min-height: 500px;
+  }
+  
+  .section-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #1e3a8a;
+    margin-bottom: 15px;
+  }
+  
+  .chart-placeholder {
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #eef2ff;
+    border: 2px dashed #c7d2fe;
+    border-radius: 12px;
+    color: #475569;
+    font-size: 1rem;
+  }
+  
+  /* Right-side calendar */
+  .dashboard-calendar {
+    width: 360px;
+    flex-shrink: 0;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    padding: 10px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  /* Smaller calendar for dashboard context */
+  .dashboard-calendar .calendar-container {
+    padding: 10px;
+  }
+  
+  .dashboard-calendar .calendar-cell {
+    min-height: 80px;
+    font-size: 11px;
+  }
+  
+  /* Make layout responsive */
+  @media (max-width: 1024px) {
+    .dashboard-container {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .dashboard-main {
+      width: 100%;
+    }
+  
+    .dashboard-calendar {
+      width: 100%;
+      margin-top: 20px;
+    }
+  }
+  
