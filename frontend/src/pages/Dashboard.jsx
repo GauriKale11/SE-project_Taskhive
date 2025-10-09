@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../styles/dashboard.css";
 import Calender_copy from "../components/Calender_copy";
 
-import Charts from "../components/PieChart";
+import Charts from "../components/Charts";
 
 const Dashboard = ({ tasks }) => {
   const [showCalender, SetShowCalender] = useState(false);
