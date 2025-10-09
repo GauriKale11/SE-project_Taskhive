@@ -76,6 +76,58 @@ function authenticateToken(req, res, next) {
   });
 }
 
+// SIGNUP 
+app.post("/api/signup", async (req, res) => {
+  try {
+    const { name, email, password, contact, institute } = req.body;
+
+    // Check if user already exists
+    const userExist = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
+    if (userExist.rows.length > 0) {
+      return res.status(400).json({ error: "User already exists" });
+    }
+
+    // Insert new user
+    const result = await pool.query(
+      `INSERT INTO users (name, email, password, contact, institute_name, is_active, created_at, updated_at)
+       VALUES ($1, $2, $3, $4, $5, true, NOW(), NOW())
+       RETURNING user_id, name, email`,
+      [name, email, password, contact, institute]
+    );
+
+    res.status(201).json({ message: "Signup successful", user: result.rows[0] });
+  } catch (err) {
+    console.error("Signup error:", err);
+    res.status(500).json({ error: "Signup failed" });
+  }
+});
+
+// LOGIN 
+app.post("/api/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await pool.query("SELECT * FROM users WHERE email = $1 AND password = $2", [email, password]);
+
+    if (user.rows.length === 0) {
+      return res.status(401).json({ error: "Invalid credentials" });
+    }
+
+    // Create JWT token
+    const token = jwt.sign(
+      { user_id: user.rows[0].user_id, name: user.rows[0].name, email: user.rows[0].email },
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: "2h" }
+    );
+
+    res.json({ message: "Login successful", token });
+  } catch (err) {
+    console.error("Login error:", err);
+    res.status(500).json({ error: "Login failed" });
+  }
+});
+
+
 // Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

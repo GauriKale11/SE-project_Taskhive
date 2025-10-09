@@ -7,10 +7,30 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    alert(`Logging in with Email: ${email} and Password: ${password}`);
-  };
+  const handleLogin = async (e) => {
+  e.preventDefault();
+
+  try {
+    const res = await fetch("http://localhost:5000/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      alert(data.message);
+      localStorage.setItem("token", data.token); // store token for auth
+      window.location.href = "/dashboard"; // redirect after login
+    } else {
+      alert(data.error);
+    }
+  } catch (err) {
+    console.error(err);
+    alert("Login failed");
+  }
+};
+
 
   return (
     <div className="login-container">

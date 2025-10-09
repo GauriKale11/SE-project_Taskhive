@@ -9,17 +9,37 @@ const Signup = () => {
   const [contact, setContact] = useState(0);
   const [password, setPassword] = useState("");
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    alert(`Signing in with Email: ${email} and Password: ${password}`);
-  };
+  const handleSignup = async (e) => {
+  e.preventDefault();
+
+  try {
+    const res = await fetch("http://localhost:5000/api/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, institute, email, contact, password }),
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      alert(data.message);
+      // Redirect to login page after successful signup
+      window.location.href = "/login";
+    } else {
+      alert(data.error);
+    }
+  } catch (err) {
+    console.error(err);
+    alert("Signup failed");
+  }
+};
+
 
   return (
     <div className="login-container">
       <div className="login-card">
         <div className="login-box">
           <h1>Student Signup</h1>
-          <form onSubmit={handleLogin}>
+          <form onSubmit={handleSignup}>
         
             <label>
               <span>Name</span>
