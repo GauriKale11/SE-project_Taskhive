@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../styles/calender_copy.css";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Calender_copy = ({ tasks, onMonthClick }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
@@ -104,6 +105,36 @@ const Calender_copy = ({ tasks, onMonthClick }) => {
     }
   };
 
+  const handleMarkComplete = async (ev) => {
+    try {
+      await axios.put(`http://localhost:5000/events/${ev.task_id}`, {
+        is_completed: true,
+      });
+
+      setEvents((prevEvents) =>
+        prevEvents.map((event) =>
+          event.task_id === ev.task_id
+            ? { ...event, is_completed: true }
+            : event
+        )
+      );
+
+      setSelectedEvents((prevSelected) =>
+        prevSelected.map((event) =>
+          event.task_id === ev.task_id
+            ? { ...event, is_completed: true }
+            : event
+        )
+      );
+
+      console.log(ev.task_id);
+      alert("Event marked as completed!");
+    } catch (error) {
+      console.error("Error updating event status:", error);
+      alert("Failed to update status. Please try again.");
+    }
+  };
+
   return (
     <div className="calendar-container">
       <div className="calendar-header" onClick={onMonthClick}>
@@ -201,10 +232,26 @@ const Calender_copy = ({ tasks, onMonthClick }) => {
                       <strong>Deadline:</strong>{" "}
                       {new Date(ev.deadline).toLocaleDateString()}
                     </p>
-                    {ev.status && (
-                      <p>
-                        <strong>Status:</strong> {ev.status}
-                      </p>
+                    <p>
+                      <strong>Status:</strong>{" "}
+                      {ev.is_completed ? (
+                        <span className="text-green-600 font-semibold">
+                          Completed
+                        </span>
+                      ) : (
+                        <span className="text-red-600 font-semibold">
+                          Not Completed
+                        </span>
+                      )}
+                    </p>
+
+                    {!ev.is_completed && (
+                      <button
+                        onClick={() => handleMarkComplete(ev)}
+                        className="mt-2 px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+                      >
+                        Mark as Completed
+                      </button>
                     )}
                   </div>
                 </div>
