@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../styles/calender_copy.css";
 import { Link } from "react-router-dom";
-import axios from 'axios';
+import axios from "axios";
 
 const Calender_copy = ({ tasks, onMonthClick }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
@@ -105,23 +105,36 @@ const Calender_copy = ({ tasks, onMonthClick }) => {
     }
   };
 
-  const [iscomplete, SetIscomplete] = useState(false);
-
   const handleMarkComplete = async (ev) => {
     try {
-    await axios.put(`http://localhost:5000/events/${ev.task_id}`, {
-    is_completed: true,
-    });
-    
-    SetIscomplete(true);
-    console.log(ev.task_id);
-    alert("Event marked as completed!");
+      await axios.put(`http://localhost:5000/events/${ev.task_id}`, {
+        is_completed: true,
+      });
+
+      setEvents((prevEvents) =>
+        prevEvents.map((event) =>
+          event.task_id === ev.task_id
+            ? { ...event, is_completed: true }
+            : event
+        )
+      );
+
+      setSelectedEvents((prevSelected) =>
+        prevSelected.map((event) =>
+          event.task_id === ev.task_id
+            ? { ...event, is_completed: true }
+            : event
+        )
+      );
+
+      console.log(ev.task_id);
+      alert("Event marked as completed!");
     } catch (error) {
-    console.error("Error updating event status:", error);
-    alert("Failed to update status. Please try again.");
+      console.error("Error updating event status:", error);
+      alert("Failed to update status. Please try again.");
     }
-    };
-    
+  };
+
   return (
     <div className="calendar-container">
       <div className="calendar-header" onClick={onMonthClick}>
@@ -221,7 +234,7 @@ const Calender_copy = ({ tasks, onMonthClick }) => {
                     </p>
                     <p>
                       <strong>Status:</strong>{" "}
-                      {iscomplete ? (
+                      {ev.is_completed ? (
                         <span className="text-green-600 font-semibold">
                           Completed
                         </span>
@@ -232,7 +245,7 @@ const Calender_copy = ({ tasks, onMonthClick }) => {
                       )}
                     </p>
 
-                    {!iscomplete && (
+                    {!ev.is_completed && (
                       <button
                         onClick={() => handleMarkComplete(ev)}
                         className="mt-2 px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
