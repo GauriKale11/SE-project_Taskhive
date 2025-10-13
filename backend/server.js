@@ -64,6 +64,23 @@ app.post("/api/tasks", async (req, res) => {
   }
 });
 
+app.put("/events/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const event = await pool.query(`
+      UPDATE tasks
+      SET is_completed=$1
+      WHERE task_id=$2`,
+      [true, id]
+    );
+    res.json(event);
+  } catch (err) {
+    res.status(500).json({ message: "Error updating event status" });
+  }
+});
+
+
+
 function authenticateToken(req, res, next) {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
