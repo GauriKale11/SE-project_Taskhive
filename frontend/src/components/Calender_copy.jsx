@@ -12,11 +12,11 @@ const Calender_copy = ({ tasks, onMonthClick }) => {
     if (!dayEvents || dayEvents.length === 0) return "transparent";
 
     if (dayEvents.some((ev) => ev.priority?.toLowerCase() === "high"))
-      return "#ef4444"; // red
+      return "#e98787ff"; // red
     if (dayEvents.some((ev) => ev.priority?.toLowerCase() === "medium"))
-      return "#f59e0b"; // orange
+      return "#f0cb8cff"; // orange
     if (dayEvents.some((ev) => ev.priority?.toLowerCase() === "low"))
-      return "#22c55e"; // green
+      return "#8cedafff"; // green
 
     return "#3b82f6";
   };
