@@ -56,7 +56,7 @@ app.post("/api/tasks", async (req, res) => {
         created_on,
       ]
     );
-
+    console.log("Database insert successful!!");
     res.json(result.rows[0]);
   } catch (err) {
     console.error(err);
