@@ -34,36 +34,46 @@ const Task = ({ onSubmit }) => {
       notify: taskData.notify,
       priority: taskData.priority,
       subject_id: taskData.subject_id,
-      user_id: 1,
     };
 
     try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("You must be logged in to add a task.");
+        return;
+      }
+
       const res = await fetch("http://localhost:5000/api/tasks", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify(newTask),
       });
 
       const data = await res.json();
-      console.log("Task added:", data);
+
+      if (res.ok) {
+        alert("✅ Task added successfully!");
+        if (typeof onSubmit === "function") onSubmit(taskData);
+        setTaskData({
+          title: "",
+          description: "",
+          start_date: "",
+          due_date: "",
+          default_time: "",
+          notify: false,
+          priority: "Medium",
+          subject_id: "",
+        });
+      } else {
+        alert(data.error || "❌ Failed to add task.");
+      }
     } catch (err) {
-      console.error(err);
+      console.error("Error while adding task:", err);
+      alert("Error connecting to server.");
     }
-
-    if (typeof onSubmit === "function") {
-      onSubmit(taskData);
-    }
-
-    setTaskData({
-      title: "",
-      description: "",
-      start_date: "",
-      due_date: "",
-      default_time: "",
-      notify: false,
-      priority: "Medium",
-      subject_id: "",
-    });
   };
 
   return (

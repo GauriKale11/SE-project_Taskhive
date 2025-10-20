@@ -21,7 +21,7 @@ const Login = () => {
     if (res.ok) {
       alert(data.message);
       localStorage.setItem("token", data.token); // store token for auth
-      window.location.href = "/dashboard"; // redirect after login
+      window.location.href = "/"; // redirect after login
     } else {
       alert(data.error);
     }

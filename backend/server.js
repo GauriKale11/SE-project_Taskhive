@@ -9,18 +9,30 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const posts = [
-  { username: "jim", title: "post 1" },
-  { username: "kyle", title: "post 2" },
-];
+// 🔹 Middleware: authenticate JWT token
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+  if (!token) return res.sendStatus(401);
 
-app.get("/posts", authenticateToken, (req, res) => {
-  res.json(posts.filter((post) => post.username === req.user.name));
-});
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+    if (err) {
+      console.error("Token verification failed:", err);
+      return res.sendStatus(403);
+    }
+    req.user = user;
+    next();
+  });
+}
 
-app.get("/api/tasks", async (req, res) => {
+// 🔹 Fetch all tasks (only for logged-in user)
+app.get("/api/tasks", authenticateToken, async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM tasks ORDER BY deadline ASC");
+    const user_id = req.user.user_id;
+    const result = await pool.query(
+      "SELECT * FROM tasks WHERE user_id = $1 ORDER BY deadline ASC",
+      [user_id]
+    );
     res.json(result.rows);
   } catch (err) {
     console.error("Error fetching tasks:", err);
@@ -28,7 +40,8 @@ app.get("/api/tasks", async (req, res) => {
   }
 });
 
-app.post("/api/tasks", async (req, res) => {
+// 🔹 Add new task
+app.post("/api/tasks", authenticateToken, async (req, res) => {
   try {
     const {
       title,
@@ -39,59 +52,47 @@ app.post("/api/tasks", async (req, res) => {
       notify,
       priority,
       subject_id,
-      user_id,
     } = req.body;
 
+    const user_id = req.user.user_id; // ✅ from token
+
     const result = await pool.query(
-      `INSERT INTO tasks (title, description, deadline, priority, subject_id, user_id, is_completed, created_at, updated_at)
-   VALUES ($1, $2, $3, $4, $5, $6, false, $7, NOW())
-   RETURNING *`,
+      `INSERT INTO tasks 
+      (title, description, deadline, priority, subject_id, user_id, is_completed, created_at, updated_at)
+       VALUES ($1, $2, $3, $4, $5, $6, false, $7, NOW())
+       RETURNING *`,
       [
         title,
         description,
         deadline,
         priority || "Medium",
         subject_id || null,
-        user_id || 1,
+        user_id,
         created_on,
       ]
     );
 
-    res.json(result.rows[0]);
+    res.status(201).json(result.rows[0]);
   } catch (err) {
-    console.error(err);
+    console.error("Error inserting task:", err);
     res.status(500).json({ error: "Database insert failed" });
   }
 });
 
-function authenticateToken(req, res, next) {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
-  if (token == null) return res.sendStatus(401);
-
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-    if (err) return res.sendStatus(403);
-    req.user = user;
-    next();
-  });
-}
-
-// SIGNUP 
+// 🔹 SIGNUP
 app.post("/api/signup", async (req, res) => {
   try {
     const { name, email, password, contact, institute } = req.body;
 
-    // Check if user already exists
     const userExist = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
     if (userExist.rows.length > 0) {
       return res.status(400).json({ error: "User already exists" });
     }
 
-    // Insert new user
     const result = await pool.query(
       `INSERT INTO users (name, email, password, contact, institute_name, is_active, created_at, updated_at)
        VALUES ($1, $2, $3, $4, $5, true, NOW(), NOW())
-       RETURNING user_id, name, email`,
+       RETURNING user_id, name, email, contact, institute_name`,
       [name, email, password, contact, institute]
     );
 
@@ -102,32 +103,74 @@ app.post("/api/signup", async (req, res) => {
   }
 });
 
-// LOGIN 
+// 🔹 LOGIN
 app.post("/api/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const user = await pool.query("SELECT * FROM users WHERE email = $1 AND password = $2", [email, password]);
+    const user = await pool.query(
+      "SELECT * FROM users WHERE email = $1 AND password = $2",
+      [email, password]
+    );
 
     if (user.rows.length === 0) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
-    // Create JWT token
+    const u = user.rows[0];
+
     const token = jwt.sign(
-      { user_id: user.rows[0].user_id, name: user.rows[0].name, email: user.rows[0].email },
+      {
+        user_id: u.user_id,
+        name: u.name,
+        email: u.email,
+        contact: u.contact,
+        institute_name: u.institute_name,
+      },
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: "2h" }
     );
 
-    res.json({ message: "Login successful", token });
+    res.json({
+      message: "Login successful",
+      token,
+      user: {
+        user_id: u.user_id,
+        name: u.name,
+        email: u.email,
+        contact: u.contact,
+        institute_name: u.institute_name,
+      },
+    });
   } catch (err) {
     console.error("Login error:", err);
     res.status(500).json({ error: "Login failed" });
   }
 });
 
+// 🔹 Get logged-in user profile
+app.get("/api/profile", authenticateToken, async (req, res) => {
+  try {
+    const userId = req.user.user_id; // extracted from JWT token
+    const result = await pool.query(
+      `SELECT name, email, contact, institute_name 
+       FROM users 
+       WHERE user_id = $1`,
+      [userId]
+    );
 
-// Start server
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error("Error fetching profile:", err);
+    res.status(500).json({ error: "Failed to fetch profile" });
+  }
+});
+
+
+// 🔹 Start Server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(` Server running on port ${PORT}`));
