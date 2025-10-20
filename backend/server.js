@@ -79,10 +79,34 @@ app.post("/api/tasks", authenticateToken, async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
 // 🔹 SIGNUP
 app.post("/api/signup", async (req, res) => {
   try {
     const { name, email, password, contact, institute } = req.body;
+=======
+app.put("/events/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const event = await pool.query(`
+      UPDATE tasks
+      SET is_completed=$1
+      WHERE task_id=$2`,
+      [true, id]
+    );
+    res.json(event);
+  } catch (err) {
+    res.status(500).json({ message: "Error updating event status" });
+  }
+});
+
+
+
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+  if (token == null) return res.sendStatus(401);
+>>>>>>> main
 
     const userExist = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
     if (userExist.rows.length > 0) {

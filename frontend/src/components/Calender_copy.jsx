@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../styles/calender_copy.css";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Calender_copy = ({ tasks, onMonthClick }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
@@ -12,11 +13,11 @@ const Calender_copy = ({ tasks, onMonthClick }) => {
     if (!dayEvents || dayEvents.length === 0) return "transparent";
 
     if (dayEvents.some((ev) => ev.priority?.toLowerCase() === "high"))
-      return "#ef4444"; // red
+      return "#e98787ff"; // red
     if (dayEvents.some((ev) => ev.priority?.toLowerCase() === "medium"))
-      return "#f59e0b"; // orange
+      return "#f0cb8cff"; // orange
     if (dayEvents.some((ev) => ev.priority?.toLowerCase() === "low"))
-      return "#22c55e"; // green
+      return "#8cedafff"; // green
 
     return "#3b82f6";
   };
@@ -101,6 +102,36 @@ const Calender_copy = ({ tasks, onMonthClick }) => {
         return "#22c55e";
       default:
         return "#3b82f6";
+    }
+  };
+
+  const handleMarkComplete = async (ev) => {
+    try {
+      await axios.put(`http://localhost:5000/events/${ev.task_id}`, {
+        is_completed: true,
+      });
+
+      setEvents((prevEvents) =>
+        prevEvents.map((event) =>
+          event.task_id === ev.task_id
+            ? { ...event, is_completed: true }
+            : event
+        )
+      );
+
+      setSelectedEvents((prevSelected) =>
+        prevSelected.map((event) =>
+          event.task_id === ev.task_id
+            ? { ...event, is_completed: true }
+            : event
+        )
+      );
+
+      console.log(ev.task_id);
+      alert("Event marked as completed!");
+    } catch (error) {
+      console.error("Error updating event status:", error);
+      alert("Failed to update status. Please try again.");
     }
   };
 
@@ -201,10 +232,26 @@ const Calender_copy = ({ tasks, onMonthClick }) => {
                       <strong>Deadline:</strong>{" "}
                       {new Date(ev.deadline).toLocaleDateString()}
                     </p>
-                    {ev.status && (
-                      <p>
-                        <strong>Status:</strong> {ev.status}
-                      </p>
+                    <p>
+                      <strong>Status:</strong>{" "}
+                      {ev.is_completed ? (
+                        <span className="text-green-600 font-semibold">
+                          Completed
+                        </span>
+                      ) : (
+                        <span className="text-red-600 font-semibold">
+                          Not Completed
+                        </span>
+                      )}
+                    </p>
+
+                    {!ev.is_completed && (
+                      <button
+                        onClick={() => handleMarkComplete(ev)}
+                        className="mt-2 px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+                      >
+                        Mark as Completed
+                      </button>
                     )}
                   </div>
                 </div>
