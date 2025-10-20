@@ -9,7 +9,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// 🔹 Middleware: authenticate JWT token
+//  Middleware: authenticate JWT token
 function authenticateToken(req, res, next) {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
@@ -25,7 +25,7 @@ function authenticateToken(req, res, next) {
   });
 }
 
-// 🔹 Fetch all tasks (only for logged-in user)
+//  Fetch all tasks (only for logged-in user)
 app.get("/api/tasks", authenticateToken, async (req, res) => {
   try {
     const user_id = req.user.user_id;
@@ -40,7 +40,7 @@ app.get("/api/tasks", authenticateToken, async (req, res) => {
   }
 });
 
-// 🔹 Add new task
+//  Add new task
 app.post("/api/tasks", authenticateToken, async (req, res) => {
   try {
     const {
@@ -54,22 +54,14 @@ app.post("/api/tasks", authenticateToken, async (req, res) => {
       subject_id,
     } = req.body;
 
-    const user_id = req.user.user_id; // ✅ from token
+    const user_id = req.user.user_id;
 
     const result = await pool.query(
       `INSERT INTO tasks 
       (title, description, deadline, priority, subject_id, user_id, is_completed, created_at, updated_at)
        VALUES ($1, $2, $3, $4, $5, $6, false, $7, NOW())
        RETURNING *`,
-      [
-        title,
-        description,
-        deadline,
-        priority || "Medium",
-        subject_id || null,
-        user_id,
-        created_on,
-      ]
+      [title, description, deadline, priority || "Medium", subject_id || null, user_id, created_on]
     );
 
     res.status(201).json(result.rows[0]);
@@ -79,40 +71,36 @@ app.post("/api/tasks", authenticateToken, async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
-// 🔹 SIGNUP
-app.post("/api/signup", async (req, res) => {
-  try {
-    const { name, email, password, contact, institute } = req.body;
-=======
+//  Update task status
 app.put("/events/:id", async (req, res) => {
   try {
     const id = req.params.id;
-    const event = await pool.query(`
-      UPDATE tasks
-      SET is_completed=$1
-      WHERE task_id=$2`,
+    const event = await pool.query(
+      `UPDATE tasks
+       SET is_completed=$1
+       WHERE task_id=$2
+       RETURNING *`,
       [true, id]
     );
-    res.json(event);
+    res.json(event.rows[0]);
   } catch (err) {
+    console.error("Error updating event status:", err);
     res.status(500).json({ message: "Error updating event status" });
   }
 });
 
+//  SIGNUP
+app.post("/api/signup", async (req, res) => {
+  try {
+    const { name, email, password, contact, institute } = req.body;
 
-
-function authenticateToken(req, res, next) {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
-  if (token == null) return res.sendStatus(401);
->>>>>>> main
-
+    // Check if user already exists
     const userExist = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
     if (userExist.rows.length > 0) {
       return res.status(400).json({ error: "User already exists" });
     }
 
+    // Insert new user
     const result = await pool.query(
       `INSERT INTO users (name, email, password, contact, institute_name, is_active, created_at, updated_at)
        VALUES ($1, $2, $3, $4, $5, true, NOW(), NOW())
@@ -127,7 +115,7 @@ function authenticateToken(req, res, next) {
   }
 });
 
-// 🔹 LOGIN
+//  LOGIN
 app.post("/api/login", async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -172,10 +160,10 @@ app.post("/api/login", async (req, res) => {
   }
 });
 
-// 🔹 Get logged-in user profile
+// Get logged-in user profile
 app.get("/api/profile", authenticateToken, async (req, res) => {
   try {
-    const userId = req.user.user_id; // extracted from JWT token
+    const userId = req.user.user_id;
     const result = await pool.query(
       `SELECT name, email, contact, institute_name 
        FROM users 
@@ -194,7 +182,6 @@ app.get("/api/profile", authenticateToken, async (req, res) => {
   }
 });
 
-
-// 🔹 Start Server
+// Start Server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(` Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

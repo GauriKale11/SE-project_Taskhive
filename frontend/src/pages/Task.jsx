@@ -55,7 +55,7 @@ const Task = ({ onSubmit }) => {
       const data = await res.json();
 
       if (res.ok) {
-        alert("✅ Task added successfully!");
+        alert(" Task added successfully!");
         if (typeof onSubmit === "function") onSubmit(taskData);
         setTaskData({
           title: "",
@@ -68,7 +68,7 @@ const Task = ({ onSubmit }) => {
           subject_id: "",
         });
       } else {
-        alert(data.error || "❌ Failed to add task.");
+        alert(data.error || " Failed to add task.");
       }
     } catch (err) {
       console.error("Error while adding task:", err);
