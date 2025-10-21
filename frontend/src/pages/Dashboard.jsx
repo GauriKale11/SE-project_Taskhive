@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "../styles/dashboard.css";
-import Calender_copy from "../components/Calender_copy";
-
+import Calendar from "../components/Calendar";
 import Charts from "../components/Charts";
 
 const Dashboard = ({ tasks }) => {
@@ -25,7 +24,7 @@ const Dashboard = ({ tasks }) => {
       </div>
 
       <div className="dashboard-calendar">
-        <Calender_copy tasks={tasks} onMonthClick={onMonthClick} />
+        <Calendar tasks={tasks} onMonthClick={onMonthClick} />
       </div>
 
       {showCalender && (

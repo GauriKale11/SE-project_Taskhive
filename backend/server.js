@@ -40,8 +40,29 @@ app.get("/api/tasks", authenticateToken, async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
 //  Add new task
 app.post("/api/tasks", authenticateToken, async (req, res) => {
+=======
+app.get("/api/tasks-with-subjects", async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT t.task_id, t.title, t.description, t.deadline, t.priority, 
+             t.subject_id, s.subject_name, t.user_id, t.is_completed, t.created_at, t.updated_at
+      FROM tasks t
+      LEFT JOIN subjects s ON t.subject_id = s.subject_id
+      ORDER BY t.deadline ASC
+    `);
+    res.json(result.rows);
+  } catch (err) {
+    console.error("Error fetching tasks with subjects:", err);
+    res.status(500).json({ error: "Database fetch failed" });
+  }
+});
+
+
+app.post("/api/tasks", async (req, res) => {
+>>>>>>> main
   try {
     const {
       title,
@@ -63,8 +84,13 @@ app.post("/api/tasks", authenticateToken, async (req, res) => {
        RETURNING *`,
       [title, description, deadline, priority || "Medium", subject_id || null, user_id, created_on]
     );
+<<<<<<< HEAD
 
     res.status(201).json(result.rows[0]);
+=======
+    console.log("Database insert successful!!");
+    res.json(result.rows[0]);
+>>>>>>> main
   } catch (err) {
     console.error("Error inserting task:", err);
     res.status(500).json({ error: "Database insert failed" });
