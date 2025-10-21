@@ -13,11 +13,11 @@ const Calender_copy = ({ tasks, onMonthClick }) => {
     if (!dayEvents || dayEvents.length === 0) return "transparent";
 
     if (dayEvents.some((ev) => ev.priority?.toLowerCase() === "high"))
-      return "#e98787ff"; // red
+      return "#e98787ff";
     if (dayEvents.some((ev) => ev.priority?.toLowerCase() === "medium"))
-      return "#f0cb8cff"; // orange
+      return "#f0cb8cff";
     if (dayEvents.some((ev) => ev.priority?.toLowerCase() === "low"))
-      return "#8cedafff"; // green
+      return "#8cedafff";
 
     return "#3b82f6";
   };
@@ -160,7 +160,7 @@ const Calender_copy = ({ tasks, onMonthClick }) => {
       <div className="calendar-grid">
         {days.map((d, idx) => {
           const dayEvents = d.date
-            ? events.filter((ev) => isSameDay(ev.deadline, d.date))
+            ? events.filter((ev) => !ev.is_completed && isSameDay(ev.deadline, d.date))
             : [];
 
           return (
@@ -169,7 +169,6 @@ const Calender_copy = ({ tasks, onMonthClick }) => {
               className={`calendar-cell ${d.date ? "" : "empty"}`}
               style={{ backgroundColor: getDayColor(dayEvents) }}
             >
-              {" "}
               <div className="day-number">{d.date ? d.date.getDate() : ""}</div>
               <div className="events">
                 {dayEvents.slice(0, 1).map((ev, i) => (
@@ -178,18 +177,17 @@ const Calender_copy = ({ tasks, onMonthClick }) => {
                     className="event"
                     onClick={() => handleShowMore(dayEvents)}
                   >
-                    <div className="event-title">{ev.title}</div>
-                    <div className="event-time">
-                      {/* {new Date(ev.deadline).toDateString()}{" "} */}
-                    </div>
+                    <div className="event-title"></div>
+                    <div className="event-time"></div>
                   </div>
                 ))}
-                {dayEvents.length > 1 && (
+
+                {dayEvents.length > 0 && (
                   <button
                     className="more-events"
                     onClick={() => handleShowMore(dayEvents)}
                   >
-                    +{dayEvents.length - 1} more
+                    {dayEvents.length} to done
                   </button>
                 )}
               </div>

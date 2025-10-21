@@ -18,13 +18,13 @@ const Profile = () => {
 
 
   const [subjects, setSubjects] = useState([
-    "OS",
-    "DBMS",
-    "SE",
-    "DSA",
-    "PC",
-    "OOPD",
-    "CO",
+    // "OS",
+    // "DBMS",
+    // "SE",
+    // "DSA",
+    // "PC",
+    // "OOPD",
+    // "CO",
   ]);
 
   const [editable, SetEditable] = useState(false);
@@ -207,6 +207,10 @@ const Profile = () => {
               <li key={subj}>{subj}</li>
             ))}
           </ul>
+          <input type="button" value="Add Subject" 
+            className="subject-add-btn" 
+            onClick={()=> {}}  
+          />
         </div>
 
         {editable && (
