@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import "../styles/calender_copy.css";
+import "../styles/calendar.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-const Calender_copy = ({ tasks, onMonthClick }) => {
+const Calendar = ({ tasks, onMonthClick }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [events, setEvents] = useState([]);
   const [selectedEvents, setSelectedEvents] = useState([]);
@@ -266,4 +266,4 @@ const Calender_copy = ({ tasks, onMonthClick }) => {
   );
 };
 
-export default Calender_copy;
+export default Calendar;
