@@ -28,6 +28,23 @@ app.get("/api/tasks", async (req, res) => {
   }
 });
 
+app.get("/api/tasks-with-subjects", async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT t.task_id, t.title, t.description, t.deadline, t.priority, 
+             t.subject_id, s.subject_name, t.user_id, t.is_completed, t.created_at, t.updated_at
+      FROM tasks t
+      LEFT JOIN subjects s ON t.subject_id = s.subject_id
+      ORDER BY t.deadline ASC
+    `);
+    res.json(result.rows);
+  } catch (err) {
+    console.error("Error fetching tasks with subjects:", err);
+    res.status(500).json({ error: "Database fetch failed" });
+  }
+});
+
+
 app.post("/api/tasks", async (req, res) => {
   try {
     const {
