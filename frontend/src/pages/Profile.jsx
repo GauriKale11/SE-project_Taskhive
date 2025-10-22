@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-// import profileImage from "../assets/react.svg";
 import { FaCircleUser, FaLinkedin } from "react-icons/fa6";
 import { FaGithub } from "react-icons/fa6";
 import { FaGoogleDrive } from "react-icons/fa6";
 import { FaPencil } from "react-icons/fa6";
-
 import "../styles/profile.css";
 
 const Profile = () => {
@@ -16,7 +14,7 @@ const Profile = () => {
   const [github, SetGithub] = useState("");
   const [gdrive, SetGdrive] = useState("");
 
-
+  const [ShowAddSubject, SetShowAddSubject] = useState(false);
   const [subjects, setSubjects] = useState([
     // "OS",
     // "DBMS",
@@ -143,7 +141,7 @@ const Profile = () => {
             <dd>
               {editable ? (
                 <>
-                <p>Linkedin: </p>
+                  <p>Linkedin: </p>
                   <input
                     type="text"
                     value={linkedin}
@@ -162,7 +160,7 @@ const Profile = () => {
             <dd>
               {editable ? (
                 <>
-                <p>GitHub: </p>
+                  <p>GitHub: </p>
                   <input
                     type="text"
                     value={github}
@@ -181,7 +179,7 @@ const Profile = () => {
             <dd>
               {editable ? (
                 <>
-                <p>Google Drive: </p>
+                  <p>Google Drive: </p>
                   <input
                     type="text"
                     value={gdrive}
@@ -207,11 +205,39 @@ const Profile = () => {
               <li key={subj}>{subj}</li>
             ))}
           </ul>
-          <input type="button" value="Add Subject" 
-            className="subject-add-btn" 
-            onClick={()=> {}}  
-          />
+          {editable && (
+            <input
+              type="button"
+              value="Add Subject"
+              className="subject-add-btn"
+              onClick={() => {
+                SetShowAddSubject(true);
+              }}
+            />
+          )}
         </div>
+
+        {ShowAddSubject && (
+          <div className="modal-overlay">
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+              <h3 className="modal-title">Academic Courses</h3>
+              <div className="modal-scroll"></div>
+
+              <div className="subject-add-form">
+                <label className="subject-label">Subject Name</label>
+                <input type="text" className="subject-input" />
+                <input type="button" value="Add"  />
+              </div>
+
+              <button
+                onClick={() => SetShowAddSubject(false)}
+                className="close-btn"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
 
         {editable && (
           <button

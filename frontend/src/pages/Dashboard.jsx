@@ -30,7 +30,7 @@ const Dashboard = ({ tasks }) => {
       {showCalender && (
         <div className="calendar-popup-overlay" onClick={onClosePopup}>
           <div className="calendar-popup" onClick={(e) => e.stopPropagation()}>
-            <Calender_copy tasks={tasks} /> {/* same calendar */}
+            <Calendar tasks={tasks} />
             <button className="close-btn" onClick={onClosePopup}>
               Close
             </button>
