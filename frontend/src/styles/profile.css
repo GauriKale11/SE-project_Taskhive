@@ -142,6 +142,25 @@
   font-weight: 500;
 }
 
+.subject-add-form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.subject-label {
+  text-align: center;
+  font-weight: 500;
+}
+
+.subject-input {
+  text-align: center;
+  width: 80%;
+  padding: 8px 20px;
+  font-size: 18px;
+}
+
 .profile-save-btn {
   margin-top: 1rem;
   background: #3b82f6;
