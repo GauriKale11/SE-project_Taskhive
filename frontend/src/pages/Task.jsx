@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/add-task.css";
 import logo from "../assets/logo.jpg";
 
@@ -13,7 +13,7 @@ const Task = ({ onSubmit }) => {
     priority: "Medium",
     subject_id: "",
   });
-
+ const [subjects, setSubjects] = useState([]);
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setTaskData((prev) => ({
@@ -21,6 +21,23 @@ const Task = ({ onSubmit }) => {
       [name]: type === "checkbox" ? checked : value,
     }));
   };
+  useEffect(() => {
+  const fetchSubjects = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+    try {
+      const res = await fetch("http://localhost:5000/api/subjects", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await res.json();
+      if (res.ok) setSubjects(data);
+    } catch (err) {
+      console.error("Error fetching subjects:", err);
+    }
+  };
+  fetchSubjects();
+}, []);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -168,13 +185,21 @@ const Task = ({ onSubmit }) => {
             onChange={handleChange}
             required
           >
-            <option value="">Select Subject</option>
+            {/* <option value="">Select Subject</option>
             <option value="1">Operating System</option>
             <option value="2">Software Engineering</option>
             <option value="3">Database Management System</option>
             <option value="4">Environmental Studies</option>
             <option value="5">Department Electives</option>
-            <option value="6">Internship</option>
+            <option value="6">Internship</option> */}
+
+            <option value="">Select Subject</option>
+{subjects.map((subj) => (
+  <option key={subj.subject_id} value={subj.subject_id}>
+    {subj.subject_name}
+  </option>
+))}
+
           </select>
         </div>
 

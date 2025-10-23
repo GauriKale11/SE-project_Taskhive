@@ -1,14 +1,11 @@
-<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
 import profileImage from "../assets/react.svg";
-import { FaLinkedin, FaGithub, FaGoogleDrive, FaPencil } from "react-icons/fa6";
-=======
-import React, { useState } from "react";
-import { FaCircleUser, FaLinkedin } from "react-icons/fa6";
-import { FaGithub } from "react-icons/fa6";
-import { FaGoogleDrive } from "react-icons/fa6";
-import { FaPencil } from "react-icons/fa6";
->>>>>>> main
+import {
+  FaLinkedin,
+  FaGithub,
+  FaGoogleDrive,
+  FaPencil,
+} from "react-icons/fa6";
 import "../styles/profile.css";
 
 const Profile = () => {
@@ -19,7 +16,14 @@ const Profile = () => {
     institute_name: "",
   });
 
-<<<<<<< HEAD
+  const [editable, setEditable] = useState(false);
+  const [linkedin, setLinkedin] = useState("");
+  const [github, setGithub] = useState("");
+  const [gdrive, setGdrive] = useState("");
+  const [subjects, setSubjects] = useState(["Database Systems", "Operating Systems"]);
+  const [showAddSubject, setShowAddSubject] = useState(false);
+  const [newSubject, setNewSubject] = useState("");
+
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -31,23 +35,9 @@ const Profile = () => {
           if (storedUser) setUser(storedUser);
           return;
         }
-=======
-  const [ShowAddSubject, SetShowAddSubject] = useState(false);
-  const [subjects, setSubjects] = useState([
-    // "OS",
-    // "DBMS",
-    // "SE",
-    // "DSA",
-    // "PC",
-    // "OOPD",
-    // "CO",
-  ]);
->>>>>>> main
 
         const res = await fetch("http://localhost:5000/api/profile", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         });
 
         if (!res.ok) {
@@ -59,10 +49,7 @@ const Profile = () => {
 
         const data = await res.json();
         console.log("Fetched profile:", data);
-
-        // ✅ Store latest user info locally for future
         localStorage.setItem("user", JSON.stringify(data));
-
         setUser(data);
       } catch (err) {
         console.error("Error loading profile:", err);
@@ -70,145 +57,204 @@ const Profile = () => {
     };
 
     fetchProfile();
+    const fetchSubjects = async () => {
+  const token = localStorage.getItem("token");
+  if (!token) return;
+
+  try {
+    const res = await fetch("http://localhost:5000/api/subjects", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const data = await res.json();
+    if (res.ok) setSubjects(data.map((s) => s.subject_name));
+  } catch (err) {
+    console.error("Error loading subjects:", err);
+  }
+};
+
+fetchProfile();
+fetchSubjects();
+
   }, []);
+
+  // const handleAddSubject = () => {
+  //   if (newSubject.trim() !== "") {
+  //     setSubjects([...subjects, newSubject.trim()]);
+  //     setNewSubject("");
+  //     setShowAddSubject(false);
+  //   }
+  // };
+//trial
+const handleAddSubject = async () => {
+  if (newSubject.trim() === "") return;
+
+  const token = localStorage.getItem("token");
+  if (!token) {
+    alert("Login required to add subject");
+    return;
+  }
+
+  try {
+    const res = await fetch("http://localhost:5000/api/subjects", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ subject_name: newSubject.trim() }),
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      setSubjects((prev) => [...prev, data.subject_name]);
+      setNewSubject("");
+      setShowAddSubject(false);
+    } else {
+      alert(data.error || "Failed to add subject");
+    }
+  } catch (err) {
+    console.error("Error adding subject:", err);
+  }
+};
+
 
   return (
     <section className="profile-container">
       <section className="profile-card">
         <div className="personal">
-          <img src={profileImage} alt="Profile" />
+          <img src={profileImage} alt="Profile" className="profile-img" />
           <div className="changeDetails">
-            <h1 className="name">Name: {user.name || "N/A"}</h1>
-            <FaPencil />
+            <h1 className="name">{user.name || "N/A"}</h1>
+            <FaPencil
+              className="edit-icon"
+              onClick={() => setEditable(!editable)}
+              title="Edit profile"
+            />
           </div>
-          <p className="role">Registered mail: {user.email || "N/A"}</p>
-          <p className="number">Contact Number: {user.contact || "N/A"}</p>
-          <p className="institution">
-            Institute: {user.institute_name || "N/A"}
-          </p>
+          <p className="role">📧 {user.email || "N/A"}</p>
+          <p className="number">📞 {user.contact || "N/A"}</p>
+          <p className="institution">🏫 {user.institute_name || "N/A"}</p>
+
           <div className="social">
-            <FaLinkedin />
-            <FaGithub />
-            <FaGoogleDrive />
+            <FaLinkedin
+              className="social-icon"
+              title="LinkedIn"
+              style={{ color: "#0A66C2" }}
+            />
+            <FaGithub
+              className="social-icon"
+              title="GitHub"
+              style={{ color: "#333" }}
+            />
+            <FaGoogleDrive
+              className="social-icon"
+              title="Google Drive"
+              style={{ color: "#0F9D58" }}
+            />
           </div>
         </div>
-<<<<<<< HEAD
       </section>
-=======
 
-        <dl className="profile-social">
+      <section className="profile-details">
+        <div className="profile-socials">
+          <h3>Social Links</h3>
           <div className="profile-social-item">
-            <dd>
-              {editable ? (
-                <>
-                  <p>Linkedin: </p>
-                  <input
-                    type="text"
-                    value={linkedin}
-                    onChange={(e) => SetLinkedin(e.target.value)}
-                    className="profile-input"
-                    aria-label="Contact Number"
-                  />
-                </>
-              ) : (
-                <FaLinkedin className="social-icon" />
-              )}
-            </dd>
+            {editable ? (
+              <>
+                <label>LinkedIn:</label>
+                <input
+                  type="text"
+                  value={linkedin}
+                  onChange={(e) => setLinkedin(e.target.value)}
+                  placeholder="Enter LinkedIn URL"
+                />
+              </>
+            ) : (
+              <p>{linkedin || "Not linked"}</p>
+            )}
           </div>
 
           <div className="profile-social-item">
-            <dd>
-              {editable ? (
-                <>
-                  <p>GitHub: </p>
-                  <input
-                    type="text"
-                    value={github}
-                    onChange={(e) => SetGithub(e.target.value)}
-                    className="profile-input"
-                    aria-label="Contact Number"
-                  />
-                </>
-              ) : (
-                <FaGithub className="social-icon" />
-              )}
-            </dd>
+            {editable ? (
+              <>
+                <label>GitHub:</label>
+                <input
+                  type="text"
+                  value={github}
+                  onChange={(e) => setGithub(e.target.value)}
+                  placeholder="Enter GitHub URL"
+                />
+              </>
+            ) : (
+              <p>{github || "Not linked"}</p>
+            )}
           </div>
 
           <div className="profile-social-item">
-            <dd>
-              {editable ? (
-                <>
-                  <p>Google Drive: </p>
-                  <input
-                    type="text"
-                    value={gdrive}
-                    onChange={(e) => SetGdrive(e.target.value)}
-                    className="profile-input"
-                    aria-label="Contact Number"
-                  />
-                </>
-              ) : (
-                <FaGoogleDrive className="social-icon" />
-              )}
-            </dd>
+            {editable ? (
+              <>
+                <label>Google Drive:</label>
+                <input
+                  type="text"
+                  value={gdrive}
+                  onChange={(e) => setGdrive(e.target.value)}
+                  placeholder="Enter Drive link"
+                />
+              </>
+            ) : (
+              <p>{gdrive || "Not linked"}</p>
+            )}
           </div>
-        </dl>
+        </div>
 
-        {/* for subject what fields are needed ??
-          subject_name, subject_id, 
-        */}
         <div className="profile-subjects">
-          <h3>Subjects</h3>
+          <h3>Academic Subjects</h3>
           <ul>
-            {subjects.map((subj) => (
-              <li key={subj}>{subj}</li>
+            {subjects.map((subj, idx) => (
+              <li key={idx}>{subj}</li>
             ))}
           </ul>
+
           {editable && (
-            <input
-              type="button"
-              value="Add Subject"
+            <button
               className="subject-add-btn"
-              onClick={() => {
-                SetShowAddSubject(true);
-              }}
-            />
+              onClick={() => setShowAddSubject(true)}
+            >
+              Add Subject
+            </button>
           )}
         </div>
 
-        {ShowAddSubject && (
-          <div className="modal-overlay">
-            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-              <h3 className="modal-title">Academic Courses</h3>
-              <div className="modal-scroll"></div>
-
-              <div className="subject-add-form">
-                <label className="subject-label">Subject Name</label>
-                <input type="text" className="subject-input" />
-                <input type="button" value="Add"  />
-              </div>
-
-              <button
-                onClick={() => SetShowAddSubject(false)}
-                className="close-btn"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        )}
-
         {editable && (
-          <button
-            className="profile-save-btn"
-            onClick={() => SetEditable(false)}
-          >
+          <button className="profile-save-btn" onClick={() => setEditable(false)}>
             Save Changes
           </button>
         )}
-      </div>
->>>>>>> main
+      </section>
+
+      {/* Modal for adding new subject */}
+      {showAddSubject && (
+        <div className="modal-overlay" onClick={() => setShowAddSubject(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h3>Add New Subject</h3>
+            <input
+              type="text"
+              value={newSubject}
+              onChange={(e) => setNewSubject(e.target.value)}
+              placeholder="Enter subject name"
+              className="subject-input"
+            />
+            <div className="modal-actions">
+              <button onClick={handleAddSubject} className="add-btn">
+                Add
+              </button>
+              <button onClick={() => setShowAddSubject(false)} className="close-btn">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };

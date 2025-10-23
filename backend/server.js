@@ -9,7 +9,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-//  Middleware: authenticate JWT token
+
 function authenticateToken(req, res, next) {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
@@ -25,7 +25,7 @@ function authenticateToken(req, res, next) {
   });
 }
 
-//  Fetch all tasks (only for logged-in user)
+
 app.get("/api/tasks", authenticateToken, async (req, res) => {
   try {
     const user_id = req.user.user_id;
@@ -41,7 +41,6 @@ app.get("/api/tasks", authenticateToken, async (req, res) => {
 });
 
 //  Add new task
-// app.post("/api/tasks", authenticateToken, async (req, res) => {
 app.get("/api/tasks-with-subjects", async (req, res) => {
   try {
     const result = await pool.query(`
@@ -85,7 +84,7 @@ app.post("/api/tasks", authenticateToken, async (req, res) => {
     console.log("Database insert successful!!");
     res.status(201).json(result.rows[0]);
     
-    // res.json(result.rows[0]);
+
   } catch (err) {
     console.error("Error inserting task:", err);
     res.status(500).json({ error: "Database insert failed" });
@@ -115,13 +114,12 @@ app.post("/api/signup", async (req, res) => {
   try {
     const { name, email, password, contact, institute } = req.body;
 
-    // Check if user already exists
     const userExist = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
     if (userExist.rows.length > 0) {
       return res.status(400).json({ error: "User already exists" });
     }
 
-    // Insert new user
+    //new user
     const result = await pool.query(
       `INSERT INTO users (name, email, password, contact, institute_name, is_active, created_at, updated_at)
        VALUES ($1, $2, $3, $4, $5, true, NOW(), NOW())
@@ -181,7 +179,7 @@ app.post("/api/login", async (req, res) => {
   }
 });
 
-// Get logged-in user profile
+
 app.get("/api/profile", authenticateToken, async (req, res) => {
   try {
     const userId = req.user.user_id;
@@ -202,6 +200,45 @@ app.get("/api/profile", authenticateToken, async (req, res) => {
     res.status(500).json({ error: "Failed to fetch profile" });
   }
 });
+
+// Fetch all subjects
+app.get("/api/subjects", authenticateToken, async (req, res) => {
+  try {
+    const userId = req.user.user_id;
+    const result = await pool.query(
+      `SELECT subject_id, subject_name FROM subjects WHERE user_id = $1 ORDER BY subject_id ASC`,
+      [userId]
+    );
+    res.json(result.rows);
+  } catch (err) {
+    console.error("Error fetching subjects:", err);
+    res.status(500).json({ error: "Failed to fetch subjects" });
+  }
+});
+
+// Add new subject
+app.post("/api/subjects", authenticateToken, async (req, res) => {
+  try {
+    const { subject_name } = req.body;
+    const userId = req.user.user_id;
+
+    if (!subject_name || subject_name.trim() === "")
+      return res.status(400).json({ error: "Subject name required" });
+
+    const result = await pool.query(
+      `INSERT INTO subjects (subject_name, user_id, created_at)
+       VALUES ($1, $2, NOW())
+       RETURNING subject_id, subject_name`,
+      [subject_name.trim(), userId]
+    );
+
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    console.error("Error adding subject:", err);
+    res.status(500).json({ error: "Failed to add subject" });
+  }
+});
+
 
 // Start Server
 const PORT = process.env.PORT || 5000;

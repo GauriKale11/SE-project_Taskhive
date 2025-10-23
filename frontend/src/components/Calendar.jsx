@@ -26,23 +26,59 @@ const Calendar = ({ tasks, onMonthClick }) => {
     setEvents(tasks || []);
   }, [tasks]);
 
+  // useEffect(() => {
+  //   const fetchTasks = async () => {
+  //     try {
+  //       const res = await fetch("http://localhost:5000/api/tasks", {
+  //         method: "GET",
+  //         headers: { "Content-Type": "application/json" },
+  //       });
+  //       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+  //       const data = await res.json();
+  //       setEvents(data);
+  //       console.log(data);
+  //     } catch (err) {
+  //       console.error("Error fetching tasks:", err);
+  //     }
+  //   };
+  //   fetchTasks();
+  // }, []);
+
+  //trial
   useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const res = await fetch("http://localhost:5000/api/tasks", {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-        });
-        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-        const data = await res.json();
-        setEvents(data);
-        console.log(data);
-      } catch (err) {
-        console.error("Error fetching tasks:", err);
+  const fetchTasks = async () => {
+    try {
+      const storedUser = JSON.parse(localStorage.getItem("user"));
+      const token = localStorage.getItem("token");
+
+      if (!storedUser || !token) {
+        console.warn("User not logged in or missing credentials");
+        return;
       }
-    };
-    fetchTasks();
-  }, []);
+      const res = await fetch(
+        `http://localhost:5000/api/tasks?user=${encodeURIComponent(storedUser.name)}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+
+      const data = await res.json();
+      setEvents(data);
+      console.log("Fetched user-specific tasks:", data);
+    } catch (err) {
+      console.error("Error fetching user tasks:", err);
+    }
+  };
+
+  fetchTasks();
+}, []);
+
 
   const year = currentMonth.getFullYear();
   const month = currentMonth.getMonth();
