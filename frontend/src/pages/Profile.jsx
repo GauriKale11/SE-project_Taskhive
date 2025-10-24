@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react";
-import profileImage from "../assets/react.svg";
-import {
-  FaLinkedin,
-  FaGithub,
-  FaGoogleDrive,
-  FaPencil,
-} from "react-icons/fa6";
+import userImg from "../assets/user.png";
+import { FaLinkedin, FaGithub, FaGoogleDrive, FaPencil } from "react-icons/fa6";
 import "../styles/profile.css";
 
 const Profile = () => {
@@ -20,9 +15,13 @@ const Profile = () => {
   const [linkedin, setLinkedin] = useState("");
   const [github, setGithub] = useState("");
   const [gdrive, setGdrive] = useState("");
-  const [subjects, setSubjects] = useState(["Database Systems", "Operating Systems"]);
+  const [subjects, setSubjects] = useState([
+    "Database Systems",
+    "Operating Systems",
+  ]);
   const [showAddSubject, setShowAddSubject] = useState(false);
   const [newSubject, setNewSubject] = useState("");
+  const [profileImage, setProfileImage] = useState(userImg);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -56,80 +55,94 @@ const Profile = () => {
       }
     };
 
-    fetchProfile();
     const fetchSubjects = async () => {
-  const token = localStorage.getItem("token");
-  if (!token) return;
+      const token = localStorage.getItem("token");
+      if (!token) return;
 
-  try {
-    const res = await fetch("http://localhost:5000/api/subjects", {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    const data = await res.json();
-    if (res.ok) setSubjects(data.map((s) => s.subject_name));
-  } catch (err) {
-    console.error("Error loading subjects:", err);
-  }
-};
+      try {
+        const res = await fetch("http://localhost:5000/api/subjects", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const data = await res.json();
+        if (res.ok) setSubjects(data.map((s) => s.subject_name));
+      } catch (err) {
+        console.error("Error loading subjects:", err);
+      }
+    };
 
-fetchProfile();
-fetchSubjects();
-
+    fetchProfile();
+    fetchSubjects();
   }, []);
 
-  // const handleAddSubject = () => {
-  //   if (newSubject.trim() !== "") {
-  //     setSubjects([...subjects, newSubject.trim()]);
-  //     setNewSubject("");
-  //     setShowAddSubject(false);
-  //   }
-  // };
-//trial
-const handleAddSubject = async () => {
-  if (newSubject.trim() === "") return;
-
-  const token = localStorage.getItem("token");
-  if (!token) {
-    alert("Login required to add subject");
-    return;
-  }
-
-  try {
-    const res = await fetch("http://localhost:5000/api/subjects", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ subject_name: newSubject.trim() }),
-    });
-
-    const data = await res.json();
-    if (res.ok) {
-      setSubjects((prev) => [...prev, data.subject_name]);
-      setNewSubject("");
-      setShowAddSubject(false);
-    } else {
-      alert(data.error || "Failed to add subject");
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const imageURL = URL.createObjectURL(file);
+      setProfileImage(imageURL);
     }
-  } catch (err) {
-    console.error("Error adding subject:", err);
-  }
-};
+  };
 
+  const handleAddSubject = async () => {
+    if (newSubject.trim() === "") return;
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("Login required to add subject");
+      return;
+    }
+
+    try {
+      const res = await fetch("http://localhost:5000/api/subjects", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ subject_name: newSubject.trim() }),
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        setSubjects((prev) => [...prev, data.subject_name]);
+        setNewSubject("");
+        setShowAddSubject(false);
+      } else {
+        alert(data.error || "Failed to add subject");
+      }
+    } catch (err) {
+      console.error("Error adding subject:", err);
+    }
+  };
 
   return (
-    <section className="profile-container">
-      <section className="profile-card">
+    <div className="profile-container">
+      <div className="profile-card">
+        <FaPencil
+          className="edit-icon"
+          onClick={() => setEditable(!editable)}
+          title="Edit profile"
+        />
         <div className="personal">
-          <img src={profileImage} alt="Profile" className="profile-img" />
+          <div className="profile-img-wrapper">
+            <img
+              src={profileImage}
+              alt="Profile"
+              className={`profile-img ${editable ? "clickable" : ""}`}
+              onClick={() => {
+                if (editable) document.getElementById("imageUpload").click();
+              }}
+            />
+            <input
+              id="imageUpload"
+              type="file"
+              accept="image/*"
+              style={{ display: "none" }}
+              onChange={handleImageChange}
+            />
+          </div>
+
           <div className="changeDetails">
             <h1 className="name">{user.name || "N/A"}</h1>
-            <FaPencil
-              className="edit-icon"
-              onClick={() => setEditable(!editable)}
-              title="Edit profile"
-            />
           </div>
           <p className="role">📧 {user.email || "N/A"}</p>
           <p className="number">📞 {user.contact || "N/A"}</p>
@@ -153,11 +166,12 @@ const handleAddSubject = async () => {
             />
           </div>
         </div>
-      </section>
+      </div>
 
-      <section className="profile-details">
+      <div className="profile-details">
         <div className="profile-socials">
           <h3>Social Links</h3>
+
           <div className="profile-social-item">
             {editable ? (
               <>
@@ -170,7 +184,7 @@ const handleAddSubject = async () => {
                 />
               </>
             ) : (
-              <p>{linkedin || "Not linked"}</p>
+              <p>{linkedin || "LinkedIn: Not linked"}</p>
             )}
           </div>
 
@@ -186,7 +200,7 @@ const handleAddSubject = async () => {
                 />
               </>
             ) : (
-              <p>{github || "Not linked"}</p>
+              <p>{github || "GitHub: Not linked"}</p>
             )}
           </div>
 
@@ -202,7 +216,7 @@ const handleAddSubject = async () => {
                 />
               </>
             ) : (
-              <p>{gdrive || "Not linked"}</p>
+              <p>{gdrive || "Google Drive: Not linked"}</p>
             )}
           </div>
         </div>
@@ -226,11 +240,14 @@ const handleAddSubject = async () => {
         </div>
 
         {editable && (
-          <button className="profile-save-btn" onClick={() => setEditable(false)}>
+          <button
+            className="profile-save-btn"
+            onClick={() => setEditable(false)}
+          >
             Save Changes
           </button>
         )}
-      </section>
+      </div>
 
       {/* Modal for adding new subject */}
       {showAddSubject && (
@@ -248,14 +265,17 @@ const handleAddSubject = async () => {
               <button onClick={handleAddSubject} className="add-btn">
                 Add
               </button>
-              <button onClick={() => setShowAddSubject(false)} className="close-btn">
+              <button
+                onClick={() => setShowAddSubject(false)}
+                className="close-btn"
+              >
                 Cancel
               </button>
             </div>
           </div>
         </div>
       )}
-    </section>
+    </div>
   );
 };
 
