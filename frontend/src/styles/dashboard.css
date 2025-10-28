@@ -138,7 +138,7 @@
   margin-top: 1rem;
   padding: 1rem;
   color: black;
-  background-color: #4f6c8c9d;
+  background-color: #74b2f4d6;
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
@@ -166,7 +166,7 @@
 }
 
 .task-title {
-  color: #333;
+  color: #333333;
   font-size: 1.1rem;
   margin-bottom: 0.5rem;
 }

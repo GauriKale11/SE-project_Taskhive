@@ -17,7 +17,8 @@ function App() {
 };
   
   const router = createBrowserRouter([
-    {path: "/", element : <div><Navbar/><Dashboard tasks={tasks} /></div>},
+    {path: "/", element: <Login />}, 
+    {path: "/home", element : <div><Navbar/><Dashboard tasks={tasks} /></div>},
     {path: "/login", element : <div><Login/></div>},
     {path: "/signup", element: <Signup/>},
     {path: "/task", element : <div><Navbar/><Task onSubmit={handleAddTask} /></div>},

@@ -20,7 +20,7 @@ const Login = () => {
       if (res.ok) {
         alert(data.message);
         localStorage.setItem("token", data.token);
-        window.location.href = "/";
+        window.location.href = "/home";
       } else {
         alert(data.error);
       }
