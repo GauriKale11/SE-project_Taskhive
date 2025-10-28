@@ -1,7 +1,19 @@
 .dashboard-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  text-align: center;
+  margin: auto;
+  width: 100%;
+}
+
+.dashboard-heroes {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    flex-wrap: wrap;
     gap: 24px;
     padding: 20px;
     min-height: 100vh;
@@ -118,4 +130,53 @@
 /* Optional: fade out background calendar */
 .dashboard-calendar {
   opacity: 1; /* keep as is, overlay will hide focus */
+}
+
+/* COMPLETED TASK DATA */
+.task-history-data {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 1rem;
+  color: black;
+  background-color: #4f6c8c9d;
+  border: 10px solid black;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.task-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.task-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.task-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.task-title {
+  color: #333;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.task-desc {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.task-date {
+  font-size: 0.85rem;
+  color: #999;
 }

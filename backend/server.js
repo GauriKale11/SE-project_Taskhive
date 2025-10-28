@@ -159,7 +159,7 @@ app.post("/api/login", async (req, res) => {
         institute_name: u.institute_name,
       },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "2h" }
+      { expiresIn: "24h" }
     );
 
     res.json({

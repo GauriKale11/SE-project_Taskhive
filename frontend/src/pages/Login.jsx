@@ -1,75 +1,79 @@
 import React, { useState } from "react";
-import '../styles/login.css'
+import "../styles/login.css";
 import { Link } from "react-router-dom";
-import logo from '../assets/logo.jpg'
+import logo from "../assets/logo.jpg";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  try {
-    const res = await fetch("http://localhost:5000/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
-
-    const data = await res.json();
-    if (res.ok) {
-      alert(data.message);
-      localStorage.setItem("token", data.token); // store token for auth
-      window.location.href = "/"; // redirect after login
-    } else {
-      alert(data.error);
+    try {
+      const res = await fetch("http://localhost:5000/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        alert(data.message);
+        localStorage.setItem("token", data.token);
+        window.location.href = "/";
+      } else {
+        alert(data.error);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Login failed");
     }
-  } catch (err) {
-    console.error(err);
-    alert("Login failed");
-  }
-};
-
+  };
 
   return (
     <div className="login-container">
-  <div className="login-card">
-    <div className="login-box">
-      <h1>Student Login</h1>
-      <p>new user? <Link to="/signup"><u>create new account</u></Link></p>
-      <form onSubmit={handleLogin}>
-        <label>
-          <span>Email</span>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="student@example.com"
-            required
-          />
-        </label>
+      <div className="login-card">
+        <div className="login-box">
+          <h1>Student Login</h1>
+          <p>
+            new user?{" "}
+            <Link to="/signup">
+              <u>create new account</u>
+            </Link>
+          </p>
+          <form onSubmit={handleLogin}>
+            <label>
+              <span>Email</span>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="student@example.com"
+                required
+              />
+            </label>
 
-        <label>
-          <span>Password</span>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter password"
-            required
-          />
-        </label>
+            <label>
+              <span>Password</span>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter password"
+                required
+              />
+            </label>
 
-        <button type="submit">Login</button>
-      </form>
+            <button type="submit">Login</button>
+          </form>
+        </div>
+
+        <div className="login-logo">
+          <img src={logo} alt="logo" />
+        </div>
+      </div>
     </div>
+  );
+};
 
-    <div className="login-logo">
-      <img src={logo} alt="logo" />
-    </div>
-  </div>
-</div>
-)}
-
-export default Login
+export default Login;

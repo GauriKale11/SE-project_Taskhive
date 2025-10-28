@@ -1,84 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "../styles/calendar.css";
-import { Link } from "react-router-dom";
 import axios from "axios";
 
-const Calendar = ({ tasks, onMonthClick }) => {
+const Calendar = ({ tasks = [], onMonthClick }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
-  const [events, setEvents] = useState([]);
   const [selectedEvents, setSelectedEvents] = useState([]);
   const [showModal, setShowModal] = useState(false);
-
-  const getDayColor = (dayEvents) => {
-    if (!dayEvents || dayEvents.length === 0) return "transparent";
-
-    if (dayEvents.some((ev) => ev.priority?.toLowerCase() === "high"))
-      return "#e98787ff";
-    if (dayEvents.some((ev) => ev.priority?.toLowerCase() === "medium"))
-      return "#f0cb8cff";
-    if (dayEvents.some((ev) => ev.priority?.toLowerCase() === "low"))
-      return "#8cedafff";
-
-    return "#3b82f6";
-  };
-
-  useEffect(() => {
-    setEvents(tasks || []);
-  }, [tasks]);
-
-  // useEffect(() => {
-  //   const fetchTasks = async () => {
-  //     try {
-  //       const res = await fetch("http://localhost:5000/api/tasks", {
-  //         method: "GET",
-  //         headers: { "Content-Type": "application/json" },
-  //       });
-  //       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-  //       const data = await res.json();
-  //       setEvents(data);
-  //       console.log(data);
-  //     } catch (err) {
-  //       console.error("Error fetching tasks:", err);
-  //     }
-  //   };
-  //   fetchTasks();
-  // }, []);
-
-  //trial
-  useEffect(() => {
-  const fetchTasks = async () => {
-    try {
-      const storedUser = JSON.parse(localStorage.getItem("user"));
-      const token = localStorage.getItem("token");
-
-      if (!storedUser || !token) {
-        console.warn("User not logged in or missing credentials");
-        return;
-      }
-      const res = await fetch(
-        `http://localhost:5000/api/tasks?user=${encodeURIComponent(storedUser.name)}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-
-      const data = await res.json();
-      setEvents(data);
-      console.log("Fetched user-specific tasks:", data);
-    } catch (err) {
-      console.error("Error fetching user tasks:", err);
-    }
-  };
-
-  fetchTasks();
-}, []);
-
 
   const year = currentMonth.getFullYear();
   const month = currentMonth.getMonth();
@@ -102,31 +29,16 @@ const Calendar = ({ tasks, onMonthClick }) => {
     );
   };
 
-  const handleShowMore = (dayEvents) => {
-    setSelectedEvents(dayEvents);
-    setShowModal(true);
+  const getDayColor = (dayEvents) => {
+    if (!dayEvents || dayEvents.length === 0) return "transparent";
+    if (dayEvents.some((ev) => ev.priority?.toLowerCase() === "high"))
+      return "#e98787ff";
+    if (dayEvents.some((ev) => ev.priority?.toLowerCase() === "medium"))
+      return "#f0cb8cff";
+    if (dayEvents.some((ev) => ev.priority?.toLowerCase() === "low"))
+      return "#8cedafff";
+    return "#3b82f6";
   };
-
-  const closeModal = () => {
-    setShowModal(false);
-    setSelectedEvents([]);
-  };
-
-  const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-  const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   const getPriorityColor = (priority) => {
     switch ((priority || "").toLowerCase()) {
@@ -141,38 +53,39 @@ const Calendar = ({ tasks, onMonthClick }) => {
     }
   };
 
+  const handleShowMore = (dayEvents) => {
+    setSelectedEvents(dayEvents);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    setSelectedEvents([]);
+  };
+
   const handleMarkComplete = async (ev) => {
     try {
-      await axios.put(`http://localhost:5000/events/${ev.task_id}`, {
+      await axios.put(`http://localhost:5000/api/tasks/${ev.task_id}`, {
         is_completed: true,
       });
 
-      setEvents((prevEvents) =>
-        prevEvents.map((event) =>
-          event.task_id === ev.task_id
-            ? { ...event, is_completed: true }
-            : event
-        )
-      );
-
-      setSelectedEvents((prevSelected) =>
-        prevSelected.map((event) =>
-          event.task_id === ev.task_id
-            ? { ...event, is_completed: true }
-            : event
-        )
-      );
-
-      console.log(ev.task_id);
-      alert("Event marked as completed!");
+      alert("Task marked as completed!");
+      window.location.reload(); // optional: refresh page or trigger re-fetch in parent
     } catch (error) {
       console.error("Error updating event status:", error);
       alert("Failed to update status. Please try again.");
     }
   };
 
+  const monthNames = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December",
+  ];
+  const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
   return (
     <div className="calendar-container">
+      {/* Calendar header */}
       <div className="calendar-header" onClick={onMonthClick}>
         <button onClick={() => setCurrentMonth(new Date(year, month - 1, 1))}>
           Prev
@@ -185,6 +98,7 @@ const Calendar = ({ tasks, onMonthClick }) => {
         </button>
       </div>
 
+      {/* Weekdays */}
       <div className="calendar-weekdays">
         {weekDays.map((d) => (
           <div key={d} className="calendar-weekday">
@@ -193,10 +107,13 @@ const Calendar = ({ tasks, onMonthClick }) => {
         ))}
       </div>
 
+      {/* Days grid */}
       <div className="calendar-grid">
         {days.map((d, idx) => {
           const dayEvents = d.date
-            ? events.filter((ev) => !ev.is_completed && isSameDay(ev.deadline, d.date))
+            ? tasks.filter(
+                (ev) => !ev.is_completed && isSameDay(ev.deadline, d.date)
+              )
             : [];
 
           return (
@@ -207,23 +124,12 @@ const Calendar = ({ tasks, onMonthClick }) => {
             >
               <div className="day-number">{d.date ? d.date.getDate() : ""}</div>
               <div className="events">
-                {dayEvents.slice(0, 1).map((ev, i) => (
-                  <div
-                    key={i}
-                    className="event"
-                    onClick={() => handleShowMore(dayEvents)}
-                  >
-                    <div className="event-title"></div>
-                    <div className="event-time"></div>
-                  </div>
-                ))}
-
                 {dayEvents.length > 0 && (
                   <button
                     className="more-events"
                     onClick={() => handleShowMore(dayEvents)}
                   >
-                    {dayEvents.length} to done
+                    {dayEvents.length} task(s)
                   </button>
                 )}
               </div>
@@ -232,7 +138,7 @@ const Calendar = ({ tasks, onMonthClick }) => {
         })}
       </div>
 
-      {/* Modal */}
+      {/* Modal for events */}
       {showModal && (
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -254,14 +160,8 @@ const Calendar = ({ tasks, onMonthClick }) => {
                       {ev.priority || "Normal"}
                     </span>
                   </div>
-                  <p className="event-desc">
-                    {ev.description || "No description provided."}
-                  </p>
+                  <p className="event-desc">{ev.description}</p>
                   <div className="event-meta">
-                    <p>
-                      <strong>Due:</strong>{" "}
-                      {new Date(ev.due_date).toLocaleDateString()}
-                    </p>
                     <p>
                       <strong>Deadline:</strong>{" "}
                       {new Date(ev.deadline).toLocaleDateString()}
