@@ -75,9 +75,8 @@ const Dashboard = () => {
         )}
       </div>
 
-      {/* ✅ Completed Tasks Section */}
       <div className="task-history-data">
-        <h2 className="section-title">Tasks Completed</h2>
+        <h2 className="section-title">Tasks Completed History</h2>
         <div className="task-cards">
           {tasks.filter((task) => task.is_completed).length === 0 ? (
             <p className="no-tasks">No completed tasks yet.</p>

@@ -92,7 +92,7 @@ app.post("/api/tasks", authenticateToken, async (req, res) => {
 });
 
 //  Update task status
-app.put("/events/:id", async (req, res) => {
+app.put("/api/tasks/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const event = await pool.query(

@@ -260,11 +260,11 @@
 }
 
 .close-btn {
-  background: #ddd;
+  background: #ff3c3ceb;
 }
 
 .close-btn:hover {
-  background: #bbb;
+  background: #f95f5f;
   transform: scale(1.05);
 }
 
