@@ -70,7 +70,7 @@ const Calendar = ({ tasks = [], onMonthClick }) => {
       });
 
       alert("Task marked as completed!");
-      window.location.reload(); // optional: refresh page or trigger re-fetch in parent
+      window.location.reload();
     } catch (error) {
       console.error("Error updating event status:", error);
       alert("Failed to update status. Please try again.");

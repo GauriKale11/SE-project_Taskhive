@@ -14,14 +14,21 @@
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  align-items: flex-end;
-  background: rgb(108, 130, 245);
+  align-items: center;
+  gap: 10px;
+  background: rgb(4, 22, 107);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   padding: 2rem 2.5rem;
   text-align: center;
   width: 320px;
   border-right: 2px solid black;
   color: #ccc;
+}
+
+@media screen and (max-width: 983px) {
+  .profile-card {
+    width: 600px;
+  }
 }
 
 .profile-img {
@@ -47,12 +54,13 @@
 
 .personal p {
   font-size: 19px;
-  color: #000000;
+  color: hsl(0, 0%, 94%);
 }
 
 .edit-icon {
+  align-self: flex-end;
   font-size: 1.3rem;
-  color: #000000;
+  color: #ffffff;
   cursor: pointer;
   transition: color 0.3s ease, transform 0.2s ease;
 }
@@ -73,7 +81,7 @@
 .name {
   font-size: 1.5rem;
   font-weight: 600;
-  color: #2f2f2f;
+  color: #f6f6f6;
   margin-bottom: 0.3rem;
 }
 
@@ -250,7 +258,7 @@
 }
 
 .add-btn {
-  background: #5ec2b7;
+  background: #3737ff;
   color: white;
 }
 

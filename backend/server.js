@@ -25,12 +25,24 @@ function authenticateToken(req, res, next) {
   });
 }
 
+// SELECT `t.task_id, t.title, t.description, t.deadline, t.priority, 
+//       t.subject_id, s.subject_name, t.user_id, t.is_completed, t.created_at, t.updated_at
+//       FROM tasks t
+//       LEFT JOIN subjects s ON t.subject_id = s.subject_id
+//   WHERE t.user_id = $1 
+//  ORDER BY deadline ASC`,
+//      [user_id]
 
 app.get("/api/tasks", authenticateToken, async (req, res) => {
   try {
     const user_id = req.user.user_id;
     const result = await pool.query(
-      "SELECT * FROM tasks WHERE user_id = $1 ORDER BY deadline ASC",
+      `SELECT t.task_id, t.title, t.description, t.deadline, t.priority, 
+        t.subject_id, s.subject_name, t.user_id, t.is_completed, t.created_at, t.updated_at
+        FROM tasks t
+        LEFT JOIN subjects s ON t.subject_id = s.subject_id
+        WHERE t.user_id = $1 
+        ORDER BY deadline ASC`,
       [user_id]
     );
     res.json(result.rows);

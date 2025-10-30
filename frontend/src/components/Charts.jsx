@@ -1,27 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { PieChart } from "@mui/x-charts/PieChart";
-import "../styles/charts.css"; // <-- linked CSS
+import "../styles/charts.css";
 
-export default function Charts() {
-  const [tasks, setTasks] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch("http://localhost:5000/api/tasks-with-subjects")
-      .then((res) => res.json())
-      .then((data) => {
-        setTasks(data);
-        setLoading(false);
-      })
-      .catch((err) => console.error("Error fetching tasks:", err));
-  }, []);
-
-  if (loading)
-    return (
-      <p style={{ textAlign: "center", marginTop: "2rem" }}>
-        Loading charts...
-      </p>
-    );
+export default function Charts({tasks = []}) {
 
   // Completed vs Pending
   const completed = tasks.filter((t) => t.is_completed).length;
@@ -78,7 +59,7 @@ export default function Charts() {
           width={230}
           height={230}
           legend={false}
-        />
+          />
       </div>
 
       <div className="chart-card">

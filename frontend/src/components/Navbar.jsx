@@ -6,7 +6,10 @@ const Navbar = () => {
   return (
     <div className="nav-container">
       <nav className="navbar">
-        <h1 className="navbar-logo">TaskHive</h1>
+        <h1 className="navbar-logo" onClick={
+          ()=>window.location.href = "/home"
+        }>TaskHive
+        </h1>
         <div className="navbar-links">
           <Link to="/home">Dashboard</Link>
           <Link to="/login">Logout</Link>
