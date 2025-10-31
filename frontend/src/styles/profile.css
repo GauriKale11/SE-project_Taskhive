@@ -8,21 +8,24 @@
   background: linear-gradient(135deg, #e6f0ff 0%, #f8faff 100%);
   font-family: 'Poppins', sans-serif;
   color: black;
+  border-radius: 0.5rem;
 }
 
 .profile-card {
+  height: 80vh;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   align-items: center;
   gap: 10px;
-  background: rgb(4, 22, 107);
+  background: rgb(5, 20, 94);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  padding: 2rem 2.5rem;
+  padding: 2rem 2rem;
   text-align: center;
-  width: 320px;
+  width: 340px;
   border-right: 2px solid black;
   color: #ccc;
+  border-radius: 0.5rem;
 }
 
 @media screen and (max-width: 983px) {
@@ -115,6 +118,8 @@
   width: 600px;
   animation: fadeIn 0.5s ease;
   background: white;
+  height: 80vh;
+  border-radius: 0.5rem;
 }
 
 .profile-details h3 {
