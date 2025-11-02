@@ -15,10 +15,7 @@ const Profile = () => {
   const [linkedin, setLinkedin] = useState("");
   const [github, setGithub] = useState("");
   const [gdrive, setGdrive] = useState("");
-  const [subjects, setSubjects] = useState([
-    "Database Systems",
-    "Operating Systems",
-  ]);
+  const [subjects, setSubjects] = useState(["Database Systems", "Operating Systems"]);
   const [showAddSubject, setShowAddSubject] = useState(false);
   const [newSubject, setNewSubject] = useState("");
   const [profileImage, setProfileImage] = useState(userImg);
@@ -29,7 +26,6 @@ const Profile = () => {
         const token = localStorage.getItem("token");
 
         if (!token) {
-          console.warn("No token found — using localStorage fallback");
           const storedUser = JSON.parse(localStorage.getItem("user"));
           if (storedUser) setUser(storedUser);
           return;
@@ -40,14 +36,12 @@ const Profile = () => {
         });
 
         if (!res.ok) {
-          console.error("Failed to fetch profile:", res.status);
           const storedUser = JSON.parse(localStorage.getItem("user"));
           if (storedUser) setUser(storedUser);
           return;
         }
 
         const data = await res.json();
-        console.log("Fetched profile:", data);
         localStorage.setItem("user", JSON.stringify(data));
         setUser(data);
       } catch (err) {
@@ -114,6 +108,32 @@ const Profile = () => {
     }
   };
 
+  const renderSocialLink = (label, value, setValue, Icon, color) => (
+    <div className="profile-social-item">
+      {editable ? (
+        <>
+          <label>{label}:</label>
+          <input
+            type="text"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            placeholder={`Enter ${label} URL`}
+          />
+        </>
+      ) : value ? (
+        <p>
+          <a href={value} target="_blank" rel="noopener noreferrer" className="social-link">
+            <Icon className="social-icon clickable" style={{ color }} /> {value}
+          </a>
+        </p>
+      ) : (
+        <p className="not-linked">
+          <Icon className="social-icon inactive" /> {label}: Not linked
+        </p>
+      )}
+    </div>
+  );
+
   return (
     <div className="profile-container">
       <div className="profile-card">
@@ -122,6 +142,7 @@ const Profile = () => {
           onClick={() => setEditable(!editable)}
           title="Edit profile"
         />
+
         <div className="personal">
           <div className="profile-img-wrapper">
             <img
@@ -141,84 +162,19 @@ const Profile = () => {
             />
           </div>
 
-          <div className="changeDetails">
-            <h1 className="name">{user.name || "N/A"}</h1>
-          </div>
+          <h1 className="name">{user.name || "N/A"}</h1>
           <p className="role">📧 {user.email || "N/A"}</p>
           <p className="number">📞 {user.contact || "N/A"}</p>
           <p className="institution">🏫 {user.institute_name || "N/A"}</p>
-
-          <div className="social">
-            <FaLinkedin
-              className="social-icon"
-              title="LinkedIn"
-              style={{ color: "#0A66C2" }}
-            />
-            <FaGithub
-              className="social-icon"
-              title="GitHub"
-              style={{ color: "#333" }}
-            />
-            <FaGoogleDrive
-              className="social-icon"
-              title="Google Drive"
-              style={{ color: "#0F9D58" }}
-            />
-          </div>
         </div>
       </div>
 
       <div className="profile-details">
         <div className="profile-socials">
           <h3>Social Links</h3>
-
-          <div className="profile-social-item">
-            {editable ? (
-              <>
-                <label>LinkedIn:</label>
-                <input
-                  type="text"
-                  value={linkedin}
-                  onChange={(e) => setLinkedin(e.target.value)}
-                  placeholder="Enter LinkedIn URL"
-                />
-              </>
-            ) : (
-              <p>{linkedin || "LinkedIn: Not linked"}</p>
-            )}
-          </div>
-
-          <div className="profile-social-item">
-            {editable ? (
-              <>
-                <label>GitHub:</label>
-                <input
-                  type="text"
-                  value={github}
-                  onChange={(e) => setGithub(e.target.value)}
-                  placeholder="Enter GitHub URL"
-                />
-              </>
-            ) : (
-              <p>{github || "GitHub: Not linked"}</p>
-            )}
-          </div>
-
-          <div className="profile-social-item">
-            {editable ? (
-              <>
-                <label>Google Drive:</label>
-                <input
-                  type="text"
-                  value={gdrive}
-                  onChange={(e) => setGdrive(e.target.value)}
-                  placeholder="Enter Drive link"
-                />
-              </>
-            ) : (
-              <p>{gdrive || "Google Drive: Not linked"}</p>
-            )}
-          </div>
+          {renderSocialLink("LinkedIn", linkedin, setLinkedin, FaLinkedin, "#0A66C2")}
+          {renderSocialLink("GitHub", github, setGithub, FaGithub, "#333")}
+          {renderSocialLink("Google Drive", gdrive, setGdrive, FaGoogleDrive, "#0F9D58")}
         </div>
 
         <div className="profile-subjects">
@@ -249,7 +205,6 @@ const Profile = () => {
         )}
       </div>
 
-      {/* Modal for adding new subject */}
       {showAddSubject && (
         <div className="modal-overlay" onClick={() => setShowAddSubject(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
