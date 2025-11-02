@@ -11,7 +11,7 @@ const Dashboard = () => {
   const onMonthClick = () => setShowCalendar(true);
   const onClosePopup = () => setShowCalendar(false);
 
-  // Fetch user-specific tasks here
+  
   useEffect(() => {
     const fetchTasks = async () => {
       try {

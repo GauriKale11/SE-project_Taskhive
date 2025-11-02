@@ -22,7 +22,7 @@ const Signup = () => {
     const data = await res.json();
     if (res.ok) {
       alert(data.message);
-      // Redirect to login page after successful signup
+      
       window.location.href = "/login";
     } else {
       alert(data.error);
