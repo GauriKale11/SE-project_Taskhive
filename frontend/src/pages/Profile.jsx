@@ -35,7 +35,7 @@ const Profile = () => {
           return;
         }
 
-        const res = await fetch("http://localhost:5000/api/profile", {
+        const res = await fetch("https://se-project-taskhive.onrender.com/api/profile", {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -60,7 +60,7 @@ const Profile = () => {
       if (!token) return;
 
       try {
-        const res = await fetch("http://localhost:5000/api/subjects", {
+        const res = await fetch("https://se-project-taskhive.onrender.com/api/subjects", {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();
@@ -92,7 +92,7 @@ const Profile = () => {
     }
 
     try {
-      const res = await fetch("http://localhost:5000/api/subjects", {
+      const res = await fetch("https://se-project-taskhive.onrender.com/api/subjects", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

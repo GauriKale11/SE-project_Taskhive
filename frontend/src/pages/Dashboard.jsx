@@ -24,7 +24,7 @@ const Dashboard = () => {
         }
 
         const res = await axios.get(
-          `http://localhost:5000/api/tasks?user=${encodeURIComponent(storedUser.name)}`,
+          `https://se-project-taskhive.onrender.com/api/tasks?user=${encodeURIComponent(storedUser.name)}`,
           {
             headers: {
               "Content-Type": "application/json",

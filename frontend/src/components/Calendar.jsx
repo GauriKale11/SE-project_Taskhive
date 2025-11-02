@@ -65,7 +65,7 @@ const Calendar = ({ tasks = [], onMonthClick }) => {
 
   const handleMarkComplete = async (ev) => {
     try {
-      await axios.put(`http://localhost:5000/api/tasks/${ev.task_id}`, {
+      await axios.put(`https://se-project-taskhive.onrender.com/api/tasks/${ev.task_id}`, {
         is_completed: true,
       });
 
