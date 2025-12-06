@@ -93,16 +93,15 @@ Please complete it as soon as possible.`;
     }
 
     console.log(
-      `✅ Reminder check completed at ${new Date().toLocaleString()}`
+      ` Reminder check completed at ${new Date().toLocaleString()}`
     );
   } catch (error) {
-    console.error("❌ Error checking reminders:", error.message);
+    console.error(" Error checking reminders:", error.message);
   } finally {
     client.release();
   }
 }
 
-// ⏰ Schedule once a day at 8:00 AM (India Time)
 cron.schedule("0 8 * * *", async () => {
   console.log("🔍 Daily reminder check started...");
   await checkReminders();
